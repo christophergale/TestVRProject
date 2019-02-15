@@ -35,5 +35,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# ProBuilder
 Assets/ProCore
 Assets/ProCore.meta
