@@ -37,7 +37,3 @@ sysinfo.txt
 *.unitypackage
 Assets/ProCore
 Assets/ProCore.meta
-
-ProjectSettings/ProjectSettings.asset
-Assets/SteamVR/Resources/SteamVR_Settings.asset.meta
-Assets/SteamVR/Resources/SteamVR_Settings.asset
