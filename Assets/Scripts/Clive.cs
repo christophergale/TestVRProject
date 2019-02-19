@@ -38,7 +38,14 @@ public class Clive : MonoBehaviour {
     public void UpdateCliveType(CliveType updatedCliveType)
     {
         if (GetComponent<CliveClass>())
+        {
+            if (GetComponent<Tetris>())
+            {
+                GetComponent<Tetris>().DestroyShape();
+            }
+
             Destroy(GetComponent<CliveClass>());
+        }
 
         if (updatedCliveType == CliveType.Tetris)
         {
