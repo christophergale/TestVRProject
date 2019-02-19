@@ -6,59 +6,47 @@ public class Laser : MonoBehaviour {
 
     LineRenderer line;
     public float laserLength;
+    List<Ray> rays;
+    List<RaycastHit> hits;
 
 	// Use this for initialization
 	void Start () {
         line = GetComponent<LineRenderer>();
+        rays = new List<Ray>();
+        hits = new List<RaycastHit>();
 	}
 
     // Update is called once per frame
     void Update()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
+        FireRay(0, transform.position, transform.forward);
 
-        line.SetPosition(0, ray.origin);
+        line.positionCount = rays.Count + 1;
 
-        if (Physics.Raycast(ray, out hit))
+        int i = 0;
+        line.SetPosition(i, rays[i].origin);
+        line.SetPosition(i + 1, hits[i].point);
+        line.SetPosition(i + 2, rays[i + 1].GetPoint(100));
+
+    }
+
+    void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
+    {
+        rays.Insert(rayIndex, new Ray(origin, direction));
+        hits.Insert(rayIndex, new RaycastHit());
+        CheckReflection(rayIndex);
+    }
+
+    void CheckReflection(int rayIndex)
+    {
+        RaycastHit currentHit = hits[rayIndex];
+
+        if (Physics.Raycast(rays[rayIndex], out currentHit))
         {
-            if (hit.collider.GetComponent<Reflector>())
+            if (currentHit.collider.GetComponent<Reflector>())
             {
-                line.positionCount = 3;
-                line.SetPosition(1, hit.point);
-
-                Ray reflectedRay = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
-                RaycastHit reflectedRayHit;
-                if (Physics.Raycast(reflectedRay, out reflectedRayHit))
-                {
-                    if (reflectedRayHit.collider.CompareTag("Switch"))
-                    {
-                        line.SetPosition(2, reflectedRayHit.point);
-                        Switch switchHit = reflectedRayHit.collider.GetComponent<Switch>();
-                        switchHit.activated = true;
-                    }
-                }
-
-                line.SetPosition(2, reflectedRay.GetPoint(laserLength));
+                FireRay(1, currentHit.point, Vector3.Reflect(rays[0].direction, currentHit.normal));
             }
-            else
-            {
-                line.positionCount = 2;
-                line.SetPosition(1, hit.point);
-            }
-
-            if (hit.collider.CompareTag("Switch") && hit.collider.GetComponent<Switch>().switchType == Switch.SwitchType.Laser)
-            {
-                line.positionCount = 2;
-                line.SetPosition(1, hit.point);
-                Switch switchHit = hit.collider.GetComponent<Switch>();
-                switchHit.activated = true;
-            }
-        }
-        else
-        {
-            line.positionCount = 2;
-            line.SetPosition(1, ray.GetPoint(laserLength));
         }
     }
 }
