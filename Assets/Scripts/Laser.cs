@@ -5,7 +5,6 @@ using UnityEngine;
 public class Laser : MonoBehaviour {
 
     LineRenderer line;
-    // public float laserLength;
 
     public int maximumReflections = 2;
     Ray[] rays;
@@ -32,8 +31,6 @@ public class Laser : MonoBehaviour {
         FireRay(0, transform.position, transform.forward);
 
         UpdateLine();
-
-        Debug.Log(reflections);
     }
 
     void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
@@ -41,7 +38,6 @@ public class Laser : MonoBehaviour {
         // Create a new ray at the index passed in, from the origin passed in, in the direction passed in
         rays[rayIndex] = new Ray(origin, direction);
         // Create a new RaycastHit at the index passed in
-        //Debug.Log(rayIndex);
         hits[rayIndex] = new RaycastHit();
 
         // Call CheckReflection and pass in the rayIndex
@@ -75,40 +71,23 @@ public class Laser : MonoBehaviour {
 
         // The first position will always be at the 0 index of the linePositions array and will always be the origin point of the first ray
         linePositions[0] = rays[0].origin;
-        // linePositions[1] = hits[0].point;
 
-        // Loop through the subsequent positions (from 1), incrementing by 2 each time as this for loop assigns values to 2 positions at a time
+        // Loop through the subsequent reflection points (from 1) and assign their position to the linePositions array
         for (int i = 1; i <= reflections; i++)
         {
             linePositions[i] = hits[i - 1].point;
         }
 
+        // The final point (reflections + 1) is set to 10 units along the final ray
         linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
 
-        //line.SetPosition(0, linePositions[0]);
-        //line.SetPosition(1, linePositions[1]);
+        // Loop through the LineRenderer positions and assign them accordingly
         for (int i = 0; i < reflections + 1; i++)
         {
             line.SetPosition(i, linePositions[i]);
-            //Debug.Log(linePositions[i]);
         }
 
+        // Set the position of the final point of the LineRenderer
         line.SetPosition(reflections + 1, linePositions[reflections + 1]);
-
-
-
-        //if (reflections != 0)
-        //{
-        //    linePositions[reflections + 1] = rays[reflections + 1].GetPoint(10.0f);
-        //}
-
-
-
-        //line.positionCount = 3;
-
-        //line.SetPosition(0, rays[0].origin);
-        //line.SetPosition(1, hits[0].point);
-        //line.SetPosition(2, hits[1].point);
-        //line.SetPosition(3, rays[2].GetPoint(10.0f));
     }
 }
