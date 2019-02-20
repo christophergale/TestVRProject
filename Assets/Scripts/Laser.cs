@@ -5,48 +5,110 @@ using UnityEngine;
 public class Laser : MonoBehaviour {
 
     LineRenderer line;
-    public float laserLength;
-    List<Ray> rays;
-    List<RaycastHit> hits;
+    // public float laserLength;
+
+    public int maximumReflections = 2;
+    Ray[] rays;
+    RaycastHit[] hits;
+    public int reflections = 0;
 
 	// Use this for initialization
 	void Start () {
+        // Get a reference to the LineRenderer component
         line = GetComponent<LineRenderer>();
-        rays = new List<Ray>();
-        hits = new List<RaycastHit>();
+
+        // Create arrays for both our Rays and our RaycastHits
+        // The rays array is 1 greater than the maximum number of possible reflections
+        rays = new Ray[maximumReflections + 1]; // 3
+        // The hits array is the same size as the maximum number of possible reflections
+        hits = new RaycastHit[maximumReflections + 1]; // 2
 	}
 
     // Update is called once per frame
     void Update()
     {
+        // First we fire a ray, passing in an index of 0 as it is our first ray
+        // We also pass in the origin point of the ray (the transform.position of the laser) and the direction (forward)
         FireRay(0, transform.position, transform.forward);
 
-        line.positionCount = rays.Count + 1;
+        UpdateLine();
 
-        int i = 0;
-        line.SetPosition(i, rays[i].origin);
-        line.SetPosition(i + 1, hits[i].point);
-        line.SetPosition(i + 2, rays[i + 1].GetPoint(100));
-
+        Debug.Log(reflections);
     }
 
     void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
     {
-        rays.Insert(rayIndex, new Ray(origin, direction));
-        hits.Insert(rayIndex, new RaycastHit());
+        // Create a new ray at the index passed in, from the origin passed in, in the direction passed in
+        rays[rayIndex] = new Ray(origin, direction);
+        // Create a new RaycastHit at the index passed in
+        //Debug.Log(rayIndex);
+        hits[rayIndex] = new RaycastHit();
+
+        // Call CheckReflection and pass in the rayIndex
         CheckReflection(rayIndex);
     }
 
     void CheckReflection(int rayIndex)
     {
-        RaycastHit currentHit = hits[rayIndex];
+        // Update the reflections count to be 1 greater than the rayIndex
+        reflections = rayIndex;
 
-        if (Physics.Raycast(rays[rayIndex], out currentHit))
+        // Cast the ray at rayIndex and store its hit info in that same index of the hits array
+        if (Physics.Raycast(rays[rayIndex], out hits[rayIndex]))
         {
-            if (currentHit.collider.GetComponent<Reflector>())
+            // If the ray hits a collider that has a Reflector component attached
+            if (hits[rayIndex].collider.GetComponent<Reflector>())
             {
-                FireRay(1, currentHit.point, Vector3.Reflect(rays[0].direction, currentHit.normal));
+                // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
+                FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
             }
         }
+    }
+
+    void UpdateLine()
+    {
+        // There will always be 2 more positions on the LineRenderer than there are reflections
+        line.positionCount = reflections + 2;
+
+        // Create an array of Vector3 linePositions that is also 2 greater than the reflections count
+        Vector3[] linePositions = new Vector3[reflections + 2];
+
+        // The first position will always be at the 0 index of the linePositions array and will always be the origin point of the first ray
+        linePositions[0] = rays[0].origin;
+        // linePositions[1] = hits[0].point;
+
+        // Loop through the subsequent positions (from 1), incrementing by 2 each time as this for loop assigns values to 2 positions at a time
+        for (int i = 1; i <= reflections; i++)
+        {
+            linePositions[i] = hits[i - 1].point;
+        }
+
+        linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+
+        //line.SetPosition(0, linePositions[0]);
+        //line.SetPosition(1, linePositions[1]);
+        for (int i = 0; i < reflections + 1; i++)
+        {
+            line.SetPosition(i, linePositions[i]);
+            //Debug.Log(linePositions[i]);
+        }
+
+        line.SetPosition(reflections + 1, linePositions[reflections + 1]);
+
+
+
+        //if (reflections != 0)
+        //{
+        //    linePositions[reflections + 1] = rays[reflections + 1].GetPoint(10.0f);
+        //}
+
+
+
+        //line.positionCount = 3;
+
+        //line.SetPosition(0, rays[0].origin);
+        //line.SetPosition(1, hits[0].point);
+        //line.SetPosition(2, hits[1].point);
+        //line.SetPosition(3, rays[2].GetPoint(10.0f));
     }
 }
