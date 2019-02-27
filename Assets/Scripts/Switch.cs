@@ -11,12 +11,16 @@ public class Switch : MonoBehaviour {
     }
 
     public Light light;
+    public Material on;
     public bool activated;
 
     public SwitchType switchType;
 	
 	// Update is called once per frame
     void Update () {
-        light.enabled = activated;
+        if (activated)
+        {
+            GetComponent<MeshRenderer>().material = on;
+        }
 	}
 }

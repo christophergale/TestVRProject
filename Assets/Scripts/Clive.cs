@@ -13,9 +13,13 @@ public class Clive : MonoBehaviour {
         Battery
     }
 
+    public bool cloneable;
+
     public CliveType cliveType;
 
     CliveType chosenCliveType;
+
+    public Vector3 scale;
 
     // [HideInInspector]
     public GameObject cliveCopy;
@@ -24,6 +28,8 @@ public class Clive : MonoBehaviour {
     {
         chosenCliveType = cliveType;
         UpdateCliveType(chosenCliveType);
+
+        scale = this.gameObject.transform.lossyScale;
     }
 
     private void Update()
@@ -62,14 +68,14 @@ public class Clive : MonoBehaviour {
             Reflector reflector = gameObject.AddComponent<Reflector>();
         }
 
-        if (updatedCliveType == CliveType.Clone)
-        {
-            Clone clone = gameObject.AddComponent<Clone>();
-        }
-
         if (updatedCliveType == CliveType.Weight)
         {
             Weight weight = gameObject.AddComponent<Weight>();
+        }
+
+        if (cloneable)
+        {
+            Clone clone = gameObject.AddComponent<Clone>();
         }
     }
 }

@@ -17,13 +17,13 @@ public class Tetris : CliveClass {
 
     public GameObject tetrisPiece;
 
-    private Vector3 scale;
-
     GameObject[] tetrisPieces;
+
+    private Vector3 scale;
 
 	// Use this for initialization
 	void Start () {
-        scale = this.gameObject.transform.lossyScale;
+        scale = GetComponent<Clive>().scale;
 
         tetrisPieces = new GameObject[3];
         tetrisPiece = GetComponent<Clive>().cliveCopy;

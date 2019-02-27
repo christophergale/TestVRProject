@@ -6,7 +6,12 @@ public class Laser : MonoBehaviour {
 
     LineRenderer line;
 
-    public int maximumReflections = 2;
+
+    /// <summary>
+    /// The maximum number of possible reflections.
+    /// </summary>
+    [Tooltip("The maximum number of possible reflections.")] public int maximumReflections = 2;
+
     Ray[] rays;
     RaycastHit[] hits;
     public int reflections = 0;
@@ -57,6 +62,11 @@ public class Laser : MonoBehaviour {
             {
                 // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
                 FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
+            }
+
+            if (hits[rayIndex].collider.GetComponent<Switch>() && hits[rayIndex].collider.GetComponent<Switch>().switchType == Switch.SwitchType.Laser)
+            {
+                hits[rayIndex].collider.GetComponent<Switch>().activated = true;
             }
         }
     }
