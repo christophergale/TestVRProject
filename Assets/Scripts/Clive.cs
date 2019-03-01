@@ -19,17 +19,29 @@ public class Clive : MonoBehaviour {
 
     CliveType chosenCliveType;
 
-    public Vector3 scale;
-
     // [HideInInspector]
     public GameObject cliveCopy;
 
-    private void Start()
+    public static Clive instance = null;
+
+    private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+
         chosenCliveType = cliveType;
         UpdateCliveType(chosenCliveType);
+    }
 
-        scale = this.gameObject.transform.lossyScale;
+    private void Start()
+    {
+
     }
 
     private void Update()

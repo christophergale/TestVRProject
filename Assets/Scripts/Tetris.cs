@@ -17,16 +17,18 @@ public class Tetris : CliveClass {
 
     public GameObject tetrisPiece;
 
-    GameObject[] tetrisPieces;
+    public GameObject[] tetrisPieces;
 
     private Vector3 scale;
 
+    public bool isCollider;
+
 	// Use this for initialization
 	void Start () {
-        scale = GetComponent<Clive>().scale;
+        scale = this.gameObject.transform.lossyScale;
 
         tetrisPieces = new GameObject[3];
-        tetrisPiece = GetComponent<Clive>().cliveCopy;
+        tetrisPiece = Clive.instance.cliveCopy;
 
         for (int i = 0; i < 3; i++)
         {
@@ -80,6 +82,20 @@ public class Tetris : CliveClass {
         for (int i = 0; i < 3; i++)
         {
             tetrisPieces[i].transform.parent = this.transform;
+        }
+
+        if (isCollider)
+        {
+            for (int i = 0; i < tetrisPieces.Length; i++)
+            {
+                tetrisPieces[i].GetComponent<BoxCollider>().isTrigger = true;
+                tetrisPieces[i].gameObject.tag = "TetrisCollider";
+                tetrisPieces[i].AddComponent<Activatable>();
+            }
+
+            gameObject.AddComponent<TetrisCollider>();
+            GetComponent<BoxCollider>().isTrigger = true;
+            this.gameObject.tag = "TetrisCollider";
         }
     }
 
