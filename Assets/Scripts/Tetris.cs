@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tetris : CliveClass {
 
+    // Define the shape enum
     public enum TetrisShape
     {
         O,
@@ -11,32 +12,43 @@ public class Tetris : CliveClass {
         J
     }
 
+    // tetrisShape is selected in the Editor (or via code)
     public TetrisShape tetrisShape;
-
+    // chosenShape is used to check if the tetrisShape that has been selected in the Editor (or via code) has been updated during runtime
     TetrisShape chosenShape;
 
+    // tetrisPiece is the Prefab to be instantiated
     public GameObject tetrisPiece;
-
+    // tetrisPieces is the array that we will populate with these instantiated Prefabs
     public GameObject[] tetrisPieces;
 
+    // scale will be a Vector3 of the lossyScale of the Tetris parent game object and will be used to rescale the child tetrisPieces
     private Vector3 scale;
 
+    // Is this Tetris the player's Clive Tetris or a collider for testing alignment?
     public bool isCollider;
 
 	// Use this for initialization
 	void Start () {
+        // Get a reference to this object's scale in world space
         scale = this.gameObject.transform.lossyScale;
 
+        // Create a new array of 3 GameObjects
         tetrisPieces = new GameObject[3];
+        // Get a reference to the Prefab element assigned to the player's Clive
         tetrisPiece = Clive.instance.cliveCopy;
 
-        for (int i = 0; i < 3; i++)
+        // Loop through the tetrisPieces array
+        for (int i = 0; i < tetrisPieces.Length; i++)
         {
+            // Instantiate the tetrisPiece Prefab at the parent object's position and rotation
             tetrisPieces[i] = Instantiate(tetrisPiece, this.transform.position, this.transform.rotation);
+            // Set each of the tetrisPieces scale to match the parent
             tetrisPieces[i].transform.localScale = scale;
         }
 
         chosenShape = tetrisShape;
+        // Call the UpdateShape function, passing in the chosenShape enum
         UpdateShape(chosenShape);
 	}
 	
@@ -53,6 +65,7 @@ public class Tetris : CliveClass {
     {
         Debug.Log("Updating shape!");
 
+        // First, define up, right, down and left positions, based on the current rotation and scale of the parent
         Vector3 up = transform.up * scale.x;
         Vector3 right = transform.right * scale.x;
         Vector3 down = -transform.up * scale.x;
@@ -79,22 +92,31 @@ public class Tetris : CliveClass {
             tetrisPieces[2].transform.position = transform.position + right + right;
         }
 
+        // Parent all of the tetrisPieces to the game object this Tetris script is attached to
         for (int i = 0; i < 3; i++)
         {
             tetrisPieces[i].transform.parent = this.transform;
         }
 
+        // If the tetris shape is a collider
         if (isCollider)
         {
+            // Loop through the tetrisPieces
             for (int i = 0; i < tetrisPieces.Length; i++)
             {
-                tetrisPieces[i].GetComponent<BoxCollider>().isTrigger = true;
+                // Disable the box collider
+                tetrisPieces[i].GetComponent<BoxCollider>().enabled = false;
+                // Tag each tetrisPiece accordingly
                 tetrisPieces[i].gameObject.tag = "TetrisCollider";
+                // Add an Activatable component to each tetrisPiece
                 tetrisPieces[i].AddComponent<Activatable>();
             }
 
+            // Add the TetrisCollider component to this parent object
             gameObject.AddComponent<TetrisCollider>();
-            GetComponent<BoxCollider>().isTrigger = true;
+            // Disable the box collider
+            GetComponent<BoxCollider>().enabled = false;
+            // Tag this parent object accordingly
             this.gameObject.tag = "TetrisCollider";
         }
     }
