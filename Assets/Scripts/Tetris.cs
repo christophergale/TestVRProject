@@ -112,8 +112,12 @@ public class Tetris : CliveClass {
                 // tetrisPieces[i].AddComponent<Activatable>();
             }
 
-            // Add the TetrisCollider component to this parent object
-            gameObject.AddComponent<TetrisCollider>();
+            if (!GetComponent<TetrisCollider>())
+            {
+                // Add the TetrisCollider component to this parent object
+                gameObject.AddComponent<TetrisCollider>();
+            }
+
             // Disable the box collider
             GetComponent<BoxCollider>().enabled = false;
             // Tag this parent object accordingly

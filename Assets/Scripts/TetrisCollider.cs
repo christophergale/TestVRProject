@@ -26,7 +26,9 @@ public class TetrisCollider : Activatable {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
+        base.Update();
+
         // Each frame, we call the CheckAlignment function
         activated = CheckAlignment();
 
