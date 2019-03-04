@@ -31,12 +31,6 @@ public class TetrisCollider : Activatable {
 
         // Each frame, we call the CheckAlignment function
         activated = CheckAlignment();
-
-        // Each frame, if this TetrisCollider has not be activated yet, we call the CheckCompletion function
-        //if (!activated)
-        //{
-        //    activated = CheckCompletion();
-        //}
     }
 
     bool CheckAlignment()
@@ -75,32 +69,4 @@ public class TetrisCollider : Activatable {
 
         return completedCheck;
     }
-
-    //bool CheckCompletion()
-    //{
-    //    // First we create a bool that is initialised as false
-    //    bool completedCheck = false;
-
-    //    // Loop through the tetrisPieces on the tetrisToCheck
-    //    for (int i = 0; i < tetrisCollider.tetrisPieces.Length; i++)
-    //    {
-    //        // This if/else statement checks if the tetrisPiece is activated. If so, it sets completedCheck to true...
-    //        // and moves onto the next tetrisPiece
-    //        // If all tetrisPieces are activated, we return completedCheck as true
-    //        if (tetrisCollider.tetrisPieces[i].GetComponent<Activatable>().activated)
-    //        {
-    //            completedCheck = true;
-    //        }
-    //        else
-    //        {
-    //            // If any of the tetrisPieces are not activated, we set completedCheck to false and break out of the loop...
-    //            // So that a false can be returned
-    //            completedCheck = false;
-    //            break;
-    //        }
-    //    }
-
-    //    // I.e. this function checks if ALL of the tetrisPieces have been activated
-    //    return completedCheck;
-    //}
 }

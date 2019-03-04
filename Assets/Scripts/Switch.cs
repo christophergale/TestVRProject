@@ -15,6 +15,8 @@ public class Switch : ActivatableTarget {
 
     public Material on;
     public Material off;
+
+    public bool activated = false;
 	
 	// Update is called once per frame
     public override void ExecuteOnActivate () {

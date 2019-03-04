@@ -64,9 +64,14 @@ public class Laser : MonoBehaviour {
                 FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
             }
 
-            if (hits[rayIndex].collider.GetComponent<Switch>() && hits[rayIndex].collider.GetComponent<Switch>().switchType == Switch.SwitchType.Laser)
+            //if (hits[rayIndex].collider.GetComponent<Switch>() && hits[rayIndex].collider.GetComponent<Switch>().switchType == Switch.SwitchType.Laser)
+            //{
+            //    hits[rayIndex].collider.GetComponent<Switch>().activated = true;
+            //}
+
+            if (hits[rayIndex].collider.GetComponent<LaserCheck>())
             {
-                hits[rayIndex].collider.GetComponent<Switch>().activated = true;
+                hits[rayIndex].collider.GetComponent<LaserCheck>().activated = true;
             }
         }
     }

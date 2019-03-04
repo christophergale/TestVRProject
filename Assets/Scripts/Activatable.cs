@@ -7,15 +7,17 @@ public class Activatable : MonoBehaviour {
     [SerializeField]
     public bool activated;
 
+    bool invoked = false;
+
     [SerializeField]
     public ActivatableTarget target;
 
     public virtual void Update()
     {
-        if (activated)
+        if (activated && !invoked)
         {
-            target.Invoke("ExecuteOnActivate", 0.1f);
-            Debug.Log("Activated!");
+            target.ExecuteOnActivate();
+            invoked = true;
         }
     }
 
