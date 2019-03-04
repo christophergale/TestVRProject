@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Switch : MonoBehaviour {
+public class Switch : ActivatableTarget {
 
-    public enum SwitchType {
+    public enum SwitchType
+    {
         Weight,
         Laser,
         Battery
     }
 
-    public Light light;
-    public Material on;
-    public bool activated;
-
     public SwitchType switchType;
+
+    public Material on;
 	
 	// Update is called once per frame
-    void Update () {
-        if (activated)
-        {
-            GetComponent<MeshRenderer>().material = on;
-        }
+    public override void ExecuteOnActivate () {
+        base.ExecuteOnActivate();
+        GetComponent<MeshRenderer>().material = on;
 	}
 }

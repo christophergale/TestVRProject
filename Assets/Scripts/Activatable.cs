@@ -14,7 +14,12 @@ public class Activatable : MonoBehaviour {
     {
         if (activated)
         {
-            target.activated = true;
+            target.Invoke("ExecuteOnActivate", 0.1f);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawLine(this.transform.position, target.transform.position);
     }
 }

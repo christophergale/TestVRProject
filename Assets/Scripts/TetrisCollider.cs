@@ -18,8 +18,6 @@ public class TetrisCollider : Activatable {
     // The tetrisToCheck will be the player's Clive 99% of the time
     public Tetris tetrisToCheck;
 
-    bool completed = false;
-
 	// Use this for initialization
 	void Start () {
         defaultMaterial = GetComponent<MeshRenderer>().material;
@@ -30,16 +28,16 @@ public class TetrisCollider : Activatable {
 	// Update is called once per frame
 	void Update () {
         // Each frame, we call the CheckAlignment function
-        CheckAlignment();
+        activated = CheckAlignment();
 
         // Each frame, if this TetrisCollider has not be activated yet, we call the CheckCompletion function
-        if (!activated)
-        {
-            activated = CheckCompletion();
-        }
+        //if (!activated)
+        //{
+        //    activated = CheckCompletion();
+        //}
     }
 
-    void CheckAlignment()
+    bool CheckAlignment()
     {
         // Loop through the tetrisPieces on the tetrisToCheck (probably the player's Clive)
         for (int i = 0; i < tetrisToCheck.tetrisPieces.Length; i++)
@@ -49,44 +47,58 @@ public class TetrisCollider : Activatable {
             {
                 // If so, change the material so that the player gets some feedback
                 tetrisCollider.tetrisPieces[i].GetComponent<MeshRenderer>().material = activatedMaterial;
-                // Set the activated bool on that tetrisPiece to be true
-                tetrisCollider.tetrisPieces[i].GetComponent<Activatable>().activated = true;
             }
             else
             {
                 // Otherwise, the material should be the default material
                 tetrisCollider.tetrisPieces[i].GetComponent<MeshRenderer>().material = defaultMaterial;
-                // And the activated bool should be false
-                tetrisCollider.tetrisPieces[i].GetComponent<Activatable>().activated = false;
             }
         }
-    }
 
-    bool CheckCompletion()
-    {
-        // First we create a bool that is initialised as false
         bool completedCheck = false;
 
-        // Loop through the tetrisPieces on the tetrisToCheck
-        for (int i = 0; i < tetrisCollider.tetrisPieces.Length; i++)
+        for (int i = 0; i < tetrisToCheck.tetrisPieces.Length; i++)
         {
-            // This if/else statement checks if the tetrisPiece is activated. If so, it sets completedCheck to true...
-            // and moves onto the next tetrisPiece
-            // If all tetrisPieces are activated, we return completedCheck as true
-            if (tetrisCollider.tetrisPieces[i].GetComponent<Activatable>().activated)
+            // Check if the magnitude of the vector between the corresponding tetrisPieces is shorter than the tolerance
+            if (Vector3.Magnitude(tetrisToCheck.tetrisPieces[i].transform.position - tetrisCollider.tetrisPieces[i].transform.position) < tolerance)
             {
                 completedCheck = true;
             }
             else
             {
-                // If any of the tetrisPieces are not activated, we set completedCheck to false and break out of the loop...
-                // So that a false can be returned
                 completedCheck = false;
                 break;
             }
         }
 
-        // I.e. this function checks if ALL of the tetrisPieces have been activated
         return completedCheck;
     }
+
+    //bool CheckCompletion()
+    //{
+    //    // First we create a bool that is initialised as false
+    //    bool completedCheck = false;
+
+    //    // Loop through the tetrisPieces on the tetrisToCheck
+    //    for (int i = 0; i < tetrisCollider.tetrisPieces.Length; i++)
+    //    {
+    //        // This if/else statement checks if the tetrisPiece is activated. If so, it sets completedCheck to true...
+    //        // and moves onto the next tetrisPiece
+    //        // If all tetrisPieces are activated, we return completedCheck as true
+    //        if (tetrisCollider.tetrisPieces[i].GetComponent<Activatable>().activated)
+    //        {
+    //            completedCheck = true;
+    //        }
+    //        else
+    //        {
+    //            // If any of the tetrisPieces are not activated, we set completedCheck to false and break out of the loop...
+    //            // So that a false can be returned
+    //            completedCheck = false;
+    //            break;
+    //        }
+    //    }
+
+    //    // I.e. this function checks if ALL of the tetrisPieces have been activated
+    //    return completedCheck;
+    //}
 }

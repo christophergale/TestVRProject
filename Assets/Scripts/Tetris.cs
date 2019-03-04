@@ -109,7 +109,7 @@ public class Tetris : CliveClass {
                 // Tag each tetrisPiece accordingly
                 tetrisPieces[i].gameObject.tag = "TetrisCollider";
                 // Add an Activatable component to each tetrisPiece
-                tetrisPieces[i].AddComponent<Activatable>();
+                // tetrisPieces[i].AddComponent<Activatable>();
             }
 
             // Add the TetrisCollider component to this parent object
