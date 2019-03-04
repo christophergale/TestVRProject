@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Switch
+  - TetrisCollider
   layers:
   - Default
   - TransparentFX
