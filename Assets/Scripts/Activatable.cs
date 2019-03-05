@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Activatable : MonoBehaviour {
 
+    // All game elements that the player can interact with to "activate" them will inherit from this class
+    // This includes switches (weight, tetris collider, laser etc.)
+
     [SerializeField]
     public bool activated;
 

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ActivatableTarget : MonoBehaviour {
 
+    // All game elements that will have their behaviour changed by an Activatable will inhereit from this class
+    // This includes doors, lights and even other Activatables that may be triggered by the target
+    // For example, the player may activate a weight switch, which then enables a laser and a laser switch in the scene
+    // This parent ActivatableTarget has only one virtual function: ExecuteOnActivate
+    // Individual targets will have different behaviour (e.g. a light turning on) that will be defined in their respective override ExecuteOnActivate functions
+
     public virtual void ExecuteOnActivate()
     {
         Debug.Log("ExecuteOnActivate!");
