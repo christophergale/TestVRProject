@@ -43,7 +43,7 @@ public class Clone : CliveClass {
             }
 
             clones[cloneCurrent] = Instantiate(clonePiece, this.transform.position, this.transform.rotation);
-            clones[cloneCurrent].transform.localScale = scale / 2;
+            clones[cloneCurrent].transform.localScale = scale;
 
             if (clive.cliveType == Clive.CliveType.Reflector)
             {

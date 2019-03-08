@@ -90,6 +90,11 @@ public class Clive : MonoBehaviour {
         if (updatedCliveType == CliveType.Tetris)
         {
             Tetris tetris = gameObject.AddComponent<Tetris>();
+
+            if (FindObjectOfType<TetrisColliderActivatable>())
+            {
+                FindObjectOfType<TetrisColliderActivatable>().FindTetrisToCheck();
+            }
         }
 
         if (updatedCliveType == CliveType.Battery)

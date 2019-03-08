@@ -85,8 +85,11 @@ public class Activatable : MonoBehaviour {
 
         for (int i = 0; i < targets.Count; i++)
         {
-            Gizmos.DrawLine(this.transform.position, targets[i].transform.position);
-            Gizmos.DrawSphere(targets[i].transform.position, 0.1f);
+            if (targets != null)
+            {
+                Gizmos.DrawLine(this.transform.position, targets[i].transform.position);
+                Gizmos.DrawSphere(targets[i].transform.position, 0.1f);
+            }
         }
     }
 

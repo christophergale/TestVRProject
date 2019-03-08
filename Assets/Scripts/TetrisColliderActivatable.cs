@@ -31,14 +31,7 @@ public class TetrisColliderActivatable : Activatable {
         defaultMaterial = GetComponent<MeshRenderer>().material;
         tetrisCollider = GetComponent<Tetris>();
 
-        if (Clive.instance.GetComponent<Tetris>())
-        {
-            tetrisToCheck = Clive.instance.GetComponent<Tetris>();
-        }
-        else
-        {
-            tetrisToCheck = null;
-        }
+        FindTetrisToCheck();
 	}
 	
 	// Update is called once per frame
@@ -87,5 +80,17 @@ public class TetrisColliderActivatable : Activatable {
         }
 
         return completedCheck;
+    }
+
+    public void FindTetrisToCheck()
+    {
+        if (Clive.instance.GetComponent<Tetris>())
+        {
+            tetrisToCheck = Clive.instance.GetComponent<Tetris>();
+        }
+        else
+        {
+            tetrisToCheck = null;
+        }
     }
 }
