@@ -16,8 +16,10 @@ public class Laser : MonoBehaviour {
     RaycastHit[] hits;
     public int reflections = 0;
 
-	// Use this for initialization
-	void Start () {
+    public LaserSwitchActivatable laserSwitchHit = null;
+
+    // Use this for initialization
+    void Start () {
         // Get a reference to the LineRenderer component
         line = GetComponent<LineRenderer>();
 
@@ -64,14 +66,23 @@ public class Laser : MonoBehaviour {
                 FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
             }
 
-            //if (hits[rayIndex].collider.GetComponent<Switch>() && hits[rayIndex].collider.GetComponent<Switch>().switchType == Switch.SwitchType.Laser)
-            //{
-            //    hits[rayIndex].collider.GetComponent<Switch>().activated = true;
-            //}
 
-            if (hits[rayIndex].collider.GetComponent<LaserCheck>())
+            if (hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>())
             {
-                hits[rayIndex].collider.GetComponent<LaserCheck>().activated = true;
+                laserSwitchHit = hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>();
+                laserSwitchHit.activated = true;
+                Debug.Log("Hitting laserSwitchHit");
+            }
+            else if (!hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
+            {
+                laserSwitchHit.activated = false;
+                laserSwitchHit = null;
+                Debug.Log("Not hitting laserSwitchHit anymore");
+            }
+            else if (laserSwitchHit != null)
+            {
+                Debug.Log("laserSwitchHit == null");
+                laserSwitchHit.activated = false;
             }
         }
     }

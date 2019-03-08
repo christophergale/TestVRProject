@@ -15,9 +15,13 @@ public class Clive : MonoBehaviour {
 
     public bool cloneable;
 
+    [HideInInspector]
+    public bool chosenCloneable;
+
     public CliveType cliveType;
 
-    CliveType chosenCliveType;
+    [HideInInspector]
+    public CliveType chosenCliveType;
 
     // [HideInInspector]
     public GameObject cliveCopy;
@@ -37,11 +41,9 @@ public class Clive : MonoBehaviour {
 
         chosenCliveType = cliveType;
         UpdateCliveType(chosenCliveType);
-    }
 
-    private void Start()
-    {
-
+        chosenCloneable = cloneable;
+        UpdateCloneable();
     }
 
     private void Update()
@@ -51,18 +53,38 @@ public class Clive : MonoBehaviour {
             chosenCliveType = cliveType;
             UpdateCliveType(chosenCliveType);
         }
+
+        if (chosenCloneable != cloneable)
+        {
+            chosenCloneable = cloneable;
+            UpdateCloneable();
+        }
     }
 
     public void UpdateCliveType(CliveType updatedCliveType)
     {
-        if (GetComponent<CliveClass>())
-        {
-            if (GetComponent<Tetris>())
-            {
-                GetComponent<Tetris>().DestroyShape();
-            }
+        //if (GetComponent<CliveClass>())
+        //{
+        //    if (GetComponent<Tetris>())
+        //    {
+        //        GetComponent<Tetris>().DestroyShape();
+        //    }
 
-            Destroy(GetComponent<CliveClass>());
+        //    Destroy(GetComponent<CliveClass>());
+        //}
+
+        CliveClass[] cliveClasses = GetComponents<CliveClass>();
+        for (int i = 0; i < cliveClasses.Length; i++)
+        {
+            if (cliveClasses[i] != GetComponent<Clone>())
+            {
+                if (cliveClasses[i] == GetComponent<Tetris>())
+                {
+                    GetComponent<Tetris>().DestroyShape();
+                }
+
+                Destroy(cliveClasses[i]);
+            }
         }
 
         if (updatedCliveType == CliveType.Tetris)
@@ -84,10 +106,20 @@ public class Clive : MonoBehaviour {
         {
             Weight weight = gameObject.AddComponent<Weight>();
         }
+    }
 
-        if (cloneable)
+    public void UpdateCloneable()
+    {
+        if (cloneable && !GetComponent<Clone>())
         {
             Clone clone = gameObject.AddComponent<Clone>();
+        }
+        else if (!cloneable)
+        {
+            if (GetComponent<Clone>())
+            {
+                Destroy(GetComponent<Clone>());
+            }
         }
     }
 }

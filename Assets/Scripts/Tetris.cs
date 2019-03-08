@@ -13,12 +13,17 @@ public class Tetris : CliveClass {
     }
 
     // tetrisShape is selected in the Editor (or via code)
+    /// <summary>
+    /// This is the desired tetris shape.
+    /// </summary>
+    [Tooltip("This is the desired tetris shape.")]
     public TetrisShape tetrisShape;
+
     // chosenShape is used to check if the tetrisShape that has been selected in the Editor (or via code) has been updated during runtime
     TetrisShape chosenShape;
 
     // tetrisPiece is the Prefab to be instantiated
-    public GameObject tetrisPiece;
+    private GameObject tetrisPiece;
     // tetrisPieces is the array that we will populate with these instantiated Prefabs
     public GameObject[] tetrisPieces;
 
@@ -107,21 +112,21 @@ public class Tetris : CliveClass {
                 // Disable the box collider
                 tetrisPieces[i].GetComponent<BoxCollider>().enabled = false;
                 // Tag each tetrisPiece accordingly
-                tetrisPieces[i].gameObject.tag = "TetrisCollider";
+                tetrisPieces[i].gameObject.tag = "TetrisColliderActivatable";
                 // Add an Activatable component to each tetrisPiece
                 // tetrisPieces[i].AddComponent<Activatable>();
             }
 
-            if (!GetComponent<TetrisCollider>())
+            if (!GetComponent<TetrisColliderActivatable>())
             {
-                // Add the TetrisCollider component to this parent object
-                gameObject.AddComponent<TetrisCollider>();
+                // Add the TetrisColliderActivatable component to this parent object
+                gameObject.AddComponent<TetrisColliderActivatable>();
             }
 
             // Disable the box collider
             GetComponent<BoxCollider>().enabled = false;
             // Tag this parent object accordingly
-            this.gameObject.tag = "TetrisCollider";
+            this.gameObject.tag = "TetrisColliderActivatable";
         }
     }
 

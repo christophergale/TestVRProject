@@ -2,35 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TetrisCollider : Activatable {
+public class TetrisColliderActivatable : Activatable {
 
     // The tolerance will be used when checking the distance between the tetris collider and the tetris to be checked
+    /// <summary>
+    /// Sensitivity of the alignment check. Set this to a higher value if you want the alignment to be easier.
+    /// </summary>
+    [Space(10)]
+    [Tooltip("Sensitivity of the alignment check. Set this to a higher value if you want the alignment to be easier.")]
     public float tolerance = 0.1f;
 
     // Materials currently being used for testing success
+    [Space(10)]
     public Material defaultMaterial;
     public Material activatedMaterial;
+    [Space(10)]
 
-    // tetrisCollider will be the Tetris component attached to the game object that this TetrisCollider component is also attached to
+    // tetrisCollider will be the Tetris component attached to the game object that this TetrisColliderActivatable component is also attached to
     // This is so that we can access the Tetris.tetrisPieces array for our distance check
-    public Tetris tetrisCollider;
+    // The tolerance will be used when checking the distance between the tetris collider and the tetris to be checked
+    private Tetris tetrisCollider;
 
     // The tetrisToCheck will be the player's Clive 99% of the time
-    public Tetris tetrisToCheck;
+    private Tetris tetrisToCheck;
 
 	// Use this for initialization
 	void Start () {
         defaultMaterial = GetComponent<MeshRenderer>().material;
         tetrisCollider = GetComponent<Tetris>();
-        tetrisToCheck = Clive.instance.GetComponent<Tetris>();
+
+        if (Clive.instance.GetComponent<Tetris>())
+        {
+            tetrisToCheck = Clive.instance.GetComponent<Tetris>();
+        }
+        else
+        {
+            tetrisToCheck = null;
+        }
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
         base.Update();
 
-        // Each frame, we call the CheckAlignment function
-        activated = CheckAlignment();
+        if (tetrisToCheck)
+        {
+            // Each frame, we call the CheckAlignment function
+            activated = CheckAlignment();
+        }
     }
 
     bool CheckAlignment()
