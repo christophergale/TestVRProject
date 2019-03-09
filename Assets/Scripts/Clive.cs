@@ -26,6 +26,13 @@ public class Clive : MonoBehaviour {
     // [HideInInspector]
     public GameObject cliveCopy;
 
+    public bool cliveActive = true;
+    [HideInInspector]
+    public bool cliveActiveChanged = false;
+    public MeshRenderer meshRenderer;
+    public Material activeMaterial;
+    public Material deactiveMaterial;
+
     public static Clive instance = null;
 
     private void Awake()
@@ -59,20 +66,12 @@ public class Clive : MonoBehaviour {
             chosenCloneable = cloneable;
             UpdateCloneable();
         }
+
+        CheckCliveActive();
     }
 
     public void UpdateCliveType(CliveType updatedCliveType)
     {
-        //if (GetComponent<CliveClass>())
-        //{
-        //    if (GetComponent<Tetris>())
-        //    {
-        //        GetComponent<Tetris>().DestroyShape();
-        //    }
-
-        //    Destroy(GetComponent<CliveClass>());
-        //}
-
         CliveClass[] cliveClasses = GetComponents<CliveClass>();
         for (int i = 0; i < cliveClasses.Length; i++)
         {
@@ -125,6 +124,33 @@ public class Clive : MonoBehaviour {
             {
                 Destroy(GetComponent<Clone>());
             }
+        }
+    }
+
+    public void CheckCliveActive()
+    {
+        if (!cliveActive && cliveActiveChanged)
+        {
+            CliveClass[] cliveClasses = GetComponents<CliveClass>();
+            for (int i = 0; i < cliveClasses.Length; i++)
+            {
+                if (cliveClasses[i] == GetComponent<Tetris>())
+                {
+                    cliveClasses[i].GetComponent<Tetris>().DestroyShape();
+                }
+
+                Destroy(cliveClasses[i]);
+            }
+
+            meshRenderer.material = deactiveMaterial;
+
+            cliveActiveChanged = false;
+        }
+        else if (cliveActive && cliveActiveChanged)
+        {
+            meshRenderer.material = activeMaterial;
+
+            cliveActiveChanged = false;
         }
     }
 }
