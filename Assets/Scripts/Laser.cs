@@ -13,8 +13,10 @@ public class Laser : MonoBehaviour {
     [Tooltip("The maximum number of possible reflections.")] public int maximumReflections = 2;
 
     Ray[] rays;
-    RaycastHit[] hits;
+    public RaycastHit[] hits;
     public int reflections = 0;
+
+    public Vector3[] pointsToCheck;
 
     public LaserSwitchActivatable laserSwitchHit = null;
 
@@ -38,6 +40,7 @@ public class Laser : MonoBehaviour {
         FireRay(0, transform.position, transform.forward);
 
         UpdateLine();
+        UpdatePointsToCheck();
     }
 
     void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
@@ -115,5 +118,17 @@ public class Laser : MonoBehaviour {
 
         // Set the position of the final point of the LineRenderer
         line.SetPosition(reflections + 1, linePositions[reflections + 1]);
+    }
+
+    void UpdatePointsToCheck()
+    {
+        pointsToCheck = new Vector3[hits.Length];
+
+        // pointsToCheck[0] = transform.position;
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            pointsToCheck[i] = hits[i].point;
+        }
     }
 }
