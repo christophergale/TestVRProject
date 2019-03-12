@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(LaserGuide))]
+[CustomEditor(typeof(LaserGuideActivatable))]
 public class LaserGuideInspector : Editor {
 
     private void OnSceneGUI()
     {
-        LaserGuide laserGuide = target as LaserGuide;
+        LaserGuideActivatable laserGuide = target as LaserGuideActivatable;
 
         if (laserGuide == null)
             return;
@@ -17,7 +17,7 @@ public class LaserGuideInspector : Editor {
 
         for (int i = 0; i < laserGuide.points.Length; i++)
         {
-            Vector3 newPos = Handles.FreeMoveHandle(laserGuide.points[i], Quaternion.identity, 0.3f, Vector3.zero, Handles.SphereHandleCap);
+            Vector3 newPos = Handles.FreeMoveHandle(laserGuide.points[i], Quaternion.identity, 0.2f, Vector3.zero, Handles.SphereHandleCap);
             Handles.Label(laserGuide.points[i], i.ToString());
 
             if (laserGuide.points[i] != newPos)

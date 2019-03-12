@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserGuide : MonoBehaviour {
+public class LaserGuideActivatable : Activatable {
 
     public Vector3[] points;
 
@@ -17,9 +17,11 @@ public class LaserGuide : MonoBehaviour {
         UpdateLine();
 	}
 
-    private void Update()
+    public override void Update()
     {
-        CheckLaserPosition();
+        base.Update();
+
+        activated = CheckLaserPosition();
     }
 
     public void UpdateLine()
@@ -33,14 +35,23 @@ public class LaserGuide : MonoBehaviour {
         }
     }
 
-    void CheckLaserPosition()
+    bool CheckLaserPosition()
     {
+        bool completedCheck = false;
+
         for (int i = 0; i < points.Length; i++)
         {
             if (Vector3.Magnitude(points[i] - laserToCheck.hits[i].point) < tolerance)
             {
-                Debug.Log(i.ToString() + " is matching!");
+                completedCheck = true;
+            }
+            else
+            {
+                completedCheck = false;
+                break;
             }
         }
+
+        return completedCheck;
     }
 }
