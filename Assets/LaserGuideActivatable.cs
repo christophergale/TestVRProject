@@ -6,13 +6,15 @@ public class LaserGuideActivatable : Activatable {
 
     public Vector3[] points;
 
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
 
     public Laser laserToCheck;
     public float tolerance = 0.5f;
 
-	// Use this for initialization
-	void Start () {
+    [ExecuteInEditMode]
+
+    // Use this for initialization
+    void Start () {
         lineRenderer = GetComponent<LineRenderer>();
         UpdateLine();
 	}

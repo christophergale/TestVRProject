@@ -13,7 +13,7 @@ public class LaserGuideInspector : Editor {
         if (laserGuide == null)
             return;
 
-        Handles.color = Color.red;
+        Handles.color = Color.white;
 
         for (int i = 0; i < laserGuide.points.Length; i++)
         {
