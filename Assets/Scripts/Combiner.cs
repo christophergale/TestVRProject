@@ -26,7 +26,7 @@ public class Combiner : CliveClass {
         {
             line.enabled = true;
 
-            combinedRay = new Ray(transform.position, Vector3.forward);
+            combinedRay = new Ray(transform.position, transform.forward);
 
             line.SetPosition(0, combinedRay.origin);
             line.SetPosition(1, combinedRay.GetPoint(10.0f));

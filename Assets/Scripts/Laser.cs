@@ -15,6 +15,8 @@ public class Laser : MonoBehaviour {
     }
 
     public LaserColor laserColor;
+    LaserColor chosenLaserColor;
+
     private Color laserColorValue;
     private bool laserColorChanged;
 
@@ -43,6 +45,9 @@ public class Laser : MonoBehaviour {
         rays = new Ray[maximumReflections + 1]; // 3
         // The hits array is the same size as the maximum number of possible reflections
         hits = new RaycastHit[maximumReflections + 1]; // 2
+
+        chosenLaserColor = laserColor;
+        UpdateColor();
 	}
 
     // Update is called once per frame
@@ -55,7 +60,11 @@ public class Laser : MonoBehaviour {
         UpdateLine();
         UpdatePointsToCheck();
 
-        UpdateColor();
+        if (chosenLaserColor != laserColor)
+        {
+            chosenLaserColor = laserColor;
+            UpdateColor();
+        }
     }
 
     void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
@@ -107,7 +116,7 @@ public class Laser : MonoBehaviour {
 
                     if (laserColor == LaserColor.Red)
                     {
-                        combinerHit.red = true;
+                        combinerHit.red = this;
                     }
 
                     if (laserColor == LaserColor.Green)
@@ -197,6 +206,11 @@ public class Laser : MonoBehaviour {
 
     void UpdateColor()
     {
+        if (combinerHit)
+        {
+            combinerHit.red = combinerHit.green = combinerHit.blue = false;
+        }
+
         if (laserColor == LaserColor.White)
             laserColorValue = Color.white;
 
