@@ -6,6 +6,18 @@ public class Laser : MonoBehaviour {
 
     LineRenderer line;
 
+    public enum LaserColor
+    {
+        White,
+        Red,
+        Green,
+        Blue
+    }
+
+    public LaserColor laserColor;
+    private Color laserColorValue;
+
+    public Combiner combinerHit = null;
 
     /// <summary>
     /// The maximum number of possible reflections.
@@ -41,6 +53,8 @@ public class Laser : MonoBehaviour {
 
         UpdateLine();
         UpdatePointsToCheck();
+
+        UpdateColor();
     }
 
     void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
@@ -62,30 +76,60 @@ public class Laser : MonoBehaviour {
         // Cast the ray at rayIndex and store its hit info in that same index of the hits array
         if (Physics.Raycast(rays[rayIndex], out hits[rayIndex]))
         {
-            // If the ray hits a collider that has a Reflector component attached
-            if (hits[rayIndex].collider.GetComponent<Reflector>())
+            if (hits[rayIndex].collider != null)
             {
-                // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
-                FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
-            }
+                // If the ray hits a collider that has a Reflector component attached
+                if (hits[rayIndex].collider.GetComponent<Reflector>())
+                {
+                    // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
+                    FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
+                }
 
 
-            if (hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>())
-            {
-                laserSwitchHit = hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>();
-                laserSwitchHit.activated = true;
-                Debug.Log("Hitting laserSwitchHit");
+                if (hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>())
+                {
+                    laserSwitchHit = hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>();
+                    laserSwitchHit.activated = true;
+                    Debug.Log("Hitting laserSwitchHit");
+                }
+                else if (!hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
+                {
+                    laserSwitchHit.activated = false;
+                    laserSwitchHit = null;
+                    Debug.Log("Not hitting laserSwitchHit anymore");
+                }
+
+
+                // If the ray hits a collider that has a Combiner component attached
+                if (hits[rayIndex].collider.GetComponent<Combiner>())
+                {
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
+                    combinerHit.laserColor = laserColorValue;
+                    Debug.Log("Hitting combinerSwitch");
+                }
+                else if (!hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit != null)
+                {
+                    combinerHit.powered = false;
+                    combinerHit = null;
+                    Debug.Log("Not hitting combinerSwitch anymore");
+                }
             }
-            else if (!hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
+        }
+        else
+        {
+            if (combinerHit != null)
+            {
+                combinerHit.powered = false;
+                combinerHit = null;
+                Debug.Log("Not hitting combinerSwitch anymore");
+            }
+
+            if (laserSwitchHit != null)
             {
                 laserSwitchHit.activated = false;
                 laserSwitchHit = null;
                 Debug.Log("Not hitting laserSwitchHit anymore");
-            }
-            else if (laserSwitchHit != null)
-            {
-                Debug.Log("laserSwitchHit == null");
-                laserSwitchHit.activated = false;
             }
         }
     }
@@ -130,5 +174,23 @@ public class Laser : MonoBehaviour {
         {
             pointsToCheck[i] = hits[i].point;
         }
+    }
+
+    void UpdateColor()
+    {
+        if (laserColor == LaserColor.White)
+            laserColorValue = Color.white;
+
+        if (laserColor == LaserColor.Red)
+            laserColorValue = Color.red;
+
+        if (laserColor == LaserColor.Green)
+            laserColorValue = Color.green;
+
+        if (laserColor == LaserColor.Blue)
+            laserColorValue = Color.blue;
+
+        line.startColor = laserColorValue;
+        line.endColor = laserColorValue;
     }
 }

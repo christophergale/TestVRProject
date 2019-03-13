@@ -6,10 +6,9 @@ public class Clive : MonoBehaviour {
 
     public enum CliveType {
         Weight,
-        Refractor,
+        Combiner,
         Reflector,
         Tetris,
-        Clone,
         Battery
     }
 
@@ -118,6 +117,11 @@ public class Clive : MonoBehaviour {
         if (updatedCliveType == CliveType.Weight)
         {
             Weight weight = gameObject.AddComponent<Weight>();
+        }
+
+        if (updatedCliveType == CliveType.Combiner)
+        {
+            Combiner combiner = gameObject.AddComponent<Combiner>();
         }
     }
 
