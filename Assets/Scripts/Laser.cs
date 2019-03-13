@@ -16,6 +16,7 @@ public class Laser : MonoBehaviour {
 
     public LaserColor laserColor;
     private Color laserColorValue;
+    private bool laserColorChanged;
 
     public Combiner combinerHit = null;
 
@@ -90,13 +91,11 @@ public class Laser : MonoBehaviour {
                 {
                     laserSwitchHit = hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>();
                     laserSwitchHit.activated = true;
-                    Debug.Log("Hitting laserSwitchHit");
                 }
                 else if (!hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
                 {
                     laserSwitchHit.activated = false;
                     laserSwitchHit = null;
-                    Debug.Log("Not hitting laserSwitchHit anymore");
                 }
 
 
@@ -105,14 +104,31 @@ public class Laser : MonoBehaviour {
                 {
                     combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
                     combinerHit.powered = true;
-                    combinerHit.laserColor = laserColorValue;
-                    Debug.Log("Hitting combinerSwitch");
+
+                    if (laserColor == LaserColor.Red)
+                    {
+                        combinerHit.red = true;
+                    }
+
+                    if (laserColor == LaserColor.Green)
+                    {
+                        combinerHit.green = true;
+                    }
+
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
+                    }
                 }
                 else if (!hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit != null)
                 {
                     combinerHit.powered = false;
+
+                    combinerHit.red = false;
+                    combinerHit.green = false;
+                    combinerHit.blue = false;
+
                     combinerHit = null;
-                    Debug.Log("Not hitting combinerSwitch anymore");
                 }
             }
         }
@@ -121,15 +137,18 @@ public class Laser : MonoBehaviour {
             if (combinerHit != null)
             {
                 combinerHit.powered = false;
+
+                combinerHit.red = false;
+                combinerHit.green = false;
+                combinerHit.blue = false;
+
                 combinerHit = null;
-                Debug.Log("Not hitting combinerSwitch anymore");
             }
 
             if (laserSwitchHit != null)
             {
                 laserSwitchHit.activated = false;
                 laserSwitchHit = null;
-                Debug.Log("Not hitting laserSwitchHit anymore");
             }
         }
     }
