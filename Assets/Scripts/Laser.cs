@@ -94,22 +94,18 @@ public class Laser : MonoBehaviour {
                     // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
                     FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
                 }
-
-
-                if (hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>())
+                else if (hits[reflections].collider.GetComponent<LaserSwitchActivatable>())
                 {
-                    laserSwitchHit = hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>();
+                    laserSwitchHit = hits[reflections].collider.GetComponent<LaserSwitchActivatable>();
                     laserSwitchHit.activated = true;
                 }
-                else if (!hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
+                else if (!hits[reflections].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
                 {
                     laserSwitchHit.activated = false;
                     laserSwitchHit = null;
                 }
-
-
                 // If the ray hits a collider that has a Combiner component attached
-                if (hits[rayIndex].collider.GetComponent<Combiner>())
+                else if (hits[rayIndex].collider.GetComponent<Combiner>())
                 {
                     combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
                     combinerHit.powered = true;

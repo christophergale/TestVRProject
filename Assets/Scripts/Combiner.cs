@@ -17,7 +17,10 @@ public class Combiner : CliveClass {
 
 	// Use this for initialization
 	void Start () {
-        line = GetComponent<LineRenderer>();
+        line = gameObject.AddComponent<LineRenderer>();
+
+        line.material = Clive.instance.laserMaterial;
+        line.startWidth = line.endWidth = 0.03f;
 	}
 	
 	// Update is called once per frame

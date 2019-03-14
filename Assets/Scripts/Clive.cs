@@ -41,6 +41,8 @@ public class Clive : MonoBehaviour {
     public Material activeMaterial;
     public Material deactiveMaterial;
 
+    public Material laserMaterial;
+
     public static Clive instance = null;
 
     private void Awake()
