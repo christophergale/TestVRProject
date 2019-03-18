@@ -35,6 +35,8 @@ public class Activatable : MonoBehaviour {
 
     public virtual void Update()
     {
+        // We make all of our checks according to the frameInterval
+        // This is done for efficiency as we do not need to check every single frame and can instead check every other frame (or another custom interval)
         if (Time.frameCount % frameInterval == 0)
         {
             // If this is a oneWayActivatable, we loop through all of the targets and set their activated to true
@@ -73,6 +75,7 @@ public class Activatable : MonoBehaviour {
 
     private void OnDrawGizmosSelected()
     {
+        // When selected in the Editor, we draw Gizmos in green or red, depending on whether activated is true or false
         if (activated)
         {
             Gizmos.color = Color.green;
@@ -82,7 +85,7 @@ public class Activatable : MonoBehaviour {
             Gizmos.color = Color.red;
         }
 
-
+        // We loop through this Activatable's targets and draw a line to each one and a sphere at their position
         for (int i = 0; i < targets.Count; i++)
         {
             if (targets != null)
@@ -95,6 +98,7 @@ public class Activatable : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
+        // In the Editor, Activatables will all be represented by a "switch" icon
         Gizmos.DrawIcon(transform.position, "SwitchIcon.png", true);
     }
 }

@@ -9,8 +9,13 @@ public class CliveDeactivator : MonoBehaviour {
         if (other.CompareTag("Clive"))
         {
             Debug.Log("Deactivating Clive!");
-            other.GetComponent<Clive>().cliveActive = false;
-            other.GetComponent<Clive>().cliveActiveChanged = true;
+            DeactivateClive(other);
         }
+    }
+
+    public void DeactivateClive(Collider clive)
+    {
+        clive.GetComponent<Clive>().cliveActive = false;
+        clive.GetComponent<Clive>().cliveActiveChanged = true;
     }
 }
