@@ -13,22 +13,31 @@ public class Clive : MonoBehaviour {
         Battery
     }
 
-    public bool cloneable;
-
-    [HideInInspector]
-    public bool chosenCloneable;
-
+    [Tooltip("Select the starting CliveType here.")]
     public CliveType cliveType;
 
     [HideInInspector]
     public CliveType chosenCliveType;
 
-    // [HideInInspector]
+    [Tooltip("Select the starting cloneable here. Will this Clive be cloneable at the start of the level?")]
+    public bool cloneable;
+
+    [Space(10)]
+
+    [HideInInspector]
+    public bool chosenCloneable;
+
+    [HideInInspector]
     public GameObject cliveCopy;
 
+    [HideInInspector]
     public bool cliveActive = true;
+
     [HideInInspector]
     public bool cliveActiveChanged = false;
+
+    [Space(10)]
+
     public MeshRenderer meshRenderer;
     public Material activeMaterial;
     public Material deactiveMaterial;
