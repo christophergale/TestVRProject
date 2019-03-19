@@ -45,9 +45,15 @@ public class Clone : CliveClass {
             clones[cloneCurrent] = Instantiate(clonePiece, this.transform.position, this.transform.rotation);
             clones[cloneCurrent].transform.localScale = scale;
 
-            if (clive.cliveType == Clive.CliveType.Reflector)
+            CliveClass[] cliveClasses = GetComponents<CliveClass>();
+
+            for (int i = 0; i < cliveClasses.Length; i++)
             {
-                clones[cloneCurrent].gameObject.AddComponent<Reflector>();
+                if (cliveClasses[i] != GetComponent<Clone>())
+                {   
+                    System.Type myType = cliveClasses[i].GetType();
+                    clones[cloneCurrent].AddComponent(myType);
+                }
             }
 
             cloneCurrent += 1;
@@ -56,6 +62,5 @@ public class Clone : CliveClass {
         {
             cloneCurrent = 0;
         }
-        
     }
 }

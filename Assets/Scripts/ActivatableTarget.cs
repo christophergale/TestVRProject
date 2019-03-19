@@ -12,6 +12,7 @@ public class ActivatableTarget : MonoBehaviour {
 
     [HideInInspector]
     public bool activated;
+
     bool hasBeenActivated = false;
 
     private void Update()
