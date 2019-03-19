@@ -175,8 +175,17 @@ public class Laser : MonoBehaviour {
             linePositions[i] = hits[i - 1].point;
         }
 
-        // The final point (reflections + 1) is set to 10 units along the final ray
-        linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+        RaycastHit finalHit = new RaycastHit();
+        if (!Physics.Raycast(rays[reflections], out finalHit))
+        {
+            // The final point (reflections + 1) is set to 10 units along the final ray
+            linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+        }
+        else
+        {
+            linePositions[reflections + 1] = finalHit.point;
+        }
+            
 
         // Loop through the LineRenderer positions and assign them accordingly
         for (int i = 0; i < reflections + 1; i++)

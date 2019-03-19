@@ -131,6 +131,13 @@ public class Clive : MonoBehaviour {
                     GetComponent<Tetris>().DestroyShape();
                 }
 
+                // If the CliveClass is a Combiner
+                if (cliveClasses[i] == GetComponent<Combiner>())
+                {
+                    // Destroy the LineRenderer component
+                    Destroy(gameObject.GetComponent<LineRenderer>());
+                }
+
                 // Then destroy any CliveClasses that are not of type Clone
                 Destroy(cliveClasses[i]);
             }
