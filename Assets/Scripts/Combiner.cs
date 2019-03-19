@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Combiner : CliveClass {
 
-    Ray combinedRay;
     LineRenderer line;
+    Laser laser;
 
     public bool red;
     public bool green;
     public bool blue;
 
-    public Color laserColor;
+    public Laser.LaserColor laserColor;
 
     public bool powered = false;
 
 	// Use this for initialization
 	void Start () {
+        laser = gameObject.AddComponent<Laser>();
         line = gameObject.AddComponent<LineRenderer>();
 
         line.material = Clive.instance.laserMaterial;
@@ -25,45 +26,32 @@ public class Combiner : CliveClass {
 	
 	// Update is called once per frame
 	void Update () {
-        if (powered)
-        {
-            line.enabled = true;
-
-            combinedRay = new Ray(transform.position, transform.forward);
-
-            line.SetPosition(0, combinedRay.origin);
-            line.SetPosition(1, combinedRay.GetPoint(10.0f));
-
-            line.startColor = line.endColor = CheckCombinedColor();
-        }
-        else
-        {
-            line.enabled = false;
-        }
+        laser.enabled = line.enabled = powered;
+        laser.laserColor = CheckCombinedColor();
 	}
 
-    Color CheckCombinedColor()
+    Laser.LaserColor CheckCombinedColor()
     {
         if (red)
-            laserColor = Color.red;
+            laserColor = Laser.LaserColor.Red;
 
         if (green)
-            laserColor = Color.green;
+            laserColor = Laser.LaserColor.Green;
 
         if (blue)
-            laserColor = Color.blue;
+            laserColor = Laser.LaserColor.Blue;
 
         if (red && green)
-            laserColor = Color.yellow;
+            laserColor = Laser.LaserColor.Yellow;
 
         if (red && blue)
-            laserColor = Color.magenta;
+            laserColor = Laser.LaserColor.Magenta;
 
         if (green && blue)
-            laserColor = Color.cyan;
+            laserColor = Laser.LaserColor.Cyan;
 
         if (red && green && blue)
-            laserColor = Color.white;
+            laserColor = Laser.LaserColor.White;
 
         return laserColor;
     }

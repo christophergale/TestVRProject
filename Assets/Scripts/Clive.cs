@@ -136,6 +136,8 @@ public class Clive : MonoBehaviour {
                 {
                     // Destroy the LineRenderer component
                     Destroy(gameObject.GetComponent<LineRenderer>());
+                    // Destroy the Laser component
+                    Destroy(gameObject.GetComponent<Laser>());
                 }
 
                 // Then destroy any CliveClasses that are not of type Clone

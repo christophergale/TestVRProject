@@ -11,7 +11,10 @@ public class Laser : MonoBehaviour {
         White,
         Red,
         Green,
-        Blue
+        Blue,
+        Yellow,
+        Magenta,
+        Cyan
     }
 
     public LaserColor laserColor;
@@ -113,7 +116,7 @@ public class Laser : MonoBehaviour {
 
                     if (laserColor == LaserColor.Red)
                     {
-                        combinerHit.red = this;
+                        combinerHit.red = true;
                     }
 
                     if (laserColor == LaserColor.Green)
@@ -228,6 +231,15 @@ public class Laser : MonoBehaviour {
 
         if (laserColor == LaserColor.Blue)
             laserColorValue = Color.blue;
+
+        if (laserColor == LaserColor.Yellow)
+            laserColorValue = Color.yellow;
+
+        if (laserColor == LaserColor.Magenta)
+            laserColorValue = Color.magenta;
+
+        if (laserColor == LaserColor.Cyan)
+            laserColorValue = Color.cyan;
 
         line.startColor = laserColorValue;
         line.endColor = laserColorValue;
