@@ -97,6 +97,7 @@ public class Laser : MonoBehaviour {
                 else if (hits[reflections].collider.GetComponent<LaserSwitchActivatable>())
                 {
                     laserSwitchHit = hits[reflections].collider.GetComponent<LaserSwitchActivatable>();
+                    if (laserSwitchHit.colorSpecific && laserSwitchHit.laserRequired == laserColor)
                     laserSwitchHit.activated = true;
                 }
                 else if (!hits[reflections].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
