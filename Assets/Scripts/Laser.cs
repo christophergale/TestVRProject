@@ -6,6 +6,24 @@ public class Laser : MonoBehaviour {
 
     LineRenderer line;
 
+    public enum LaserColor
+    {
+        White,
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        Magenta,
+        Cyan
+    }
+
+    public LaserColor laserColor;
+    LaserColor chosenLaserColor;
+
+    private Color laserColorValue;
+    private bool laserColorChanged;
+
+    public Combiner combinerHit = null;
 
     /// <summary>
     /// The maximum number of possible reflections.
@@ -30,6 +48,9 @@ public class Laser : MonoBehaviour {
         rays = new Ray[maximumReflections + 1]; // 3
         // The hits array is the same size as the maximum number of possible reflections
         hits = new RaycastHit[maximumReflections + 1]; // 2
+
+        chosenLaserColor = laserColor;
+        UpdateColor();
 	}
 
     // Update is called once per frame
@@ -41,6 +62,12 @@ public class Laser : MonoBehaviour {
 
         UpdateLine();
         UpdatePointsToCheck();
+
+        if (chosenLaserColor != laserColor)
+        {
+            chosenLaserColor = laserColor;
+            UpdateColor();
+        }
     }
 
     void FireRay(int rayIndex, Vector3 origin, Vector3 direction)
@@ -62,30 +89,75 @@ public class Laser : MonoBehaviour {
         // Cast the ray at rayIndex and store its hit info in that same index of the hits array
         if (Physics.Raycast(rays[rayIndex], out hits[rayIndex]))
         {
-            // If the ray hits a collider that has a Reflector component attached
-            if (hits[rayIndex].collider.GetComponent<Reflector>())
+            if (hits[rayIndex].collider != null)
             {
-                // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
-                FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
+                // If the ray hits a collider that has a Reflector component attached
+                if (hits[rayIndex].collider.GetComponent<Reflector>())
+                {
+                    // Fire a new ray, this time with the index of rayIndex + 1, from the point at which the ray hit the collider, in the direction of reflection
+                    FireRay(rayIndex + 1, hits[rayIndex].point, Vector3.Reflect(rays[rayIndex].direction, hits[rayIndex].normal));
+                }
+                else if (hits[reflections].collider.GetComponent<LaserSwitchActivatable>())
+                {
+                    laserSwitchHit = hits[reflections].collider.GetComponent<LaserSwitchActivatable>();
+                    if (laserSwitchHit.colorSpecific && laserSwitchHit.laserRequired == laserColor)
+                    laserSwitchHit.activated = true;
+                }
+                else if (!hits[reflections].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
+                {
+                    laserSwitchHit.activated = false;
+                    laserSwitchHit = null;
+                }
+                // If the ray hits a collider that has a Combiner component attached
+                else if (hits[rayIndex].collider.GetComponent<Combiner>())
+                {
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
+
+                    if (laserColor == LaserColor.Red)
+                    {
+                        combinerHit.red = true;
+                    }
+
+                    if (laserColor == LaserColor.Green)
+                    {
+                        combinerHit.green = true;
+                    }
+
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
+                    }
+                }
+                else if (!hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit != null)
+                {
+                    combinerHit.powered = false;
+
+                    combinerHit.red = false;
+                    combinerHit.green = false;
+                    combinerHit.blue = false;
+
+                    combinerHit = null;
+                }
+            }
+        }
+        else
+        {
+            if (combinerHit != null)
+            {
+                combinerHit.powered = false;
+
+                combinerHit.red = false;
+                combinerHit.green = false;
+                combinerHit.blue = false;
+
+                combinerHit = null;
             }
 
-
-            if (hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>())
-            {
-                laserSwitchHit = hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>();
-                laserSwitchHit.activated = true;
-                Debug.Log("Hitting laserSwitchHit");
-            }
-            else if (!hits[rayIndex].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
+            if (laserSwitchHit != null)
             {
                 laserSwitchHit.activated = false;
                 laserSwitchHit = null;
-                Debug.Log("Not hitting laserSwitchHit anymore");
-            }
-            else if (laserSwitchHit != null)
-            {
-                Debug.Log("laserSwitchHit == null");
-                laserSwitchHit.activated = false;
             }
         }
     }
@@ -107,8 +179,17 @@ public class Laser : MonoBehaviour {
             linePositions[i] = hits[i - 1].point;
         }
 
-        // The final point (reflections + 1) is set to 10 units along the final ray
-        linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+        RaycastHit finalHit = new RaycastHit();
+        if (!Physics.Raycast(rays[reflections], out finalHit))
+        {
+            // The final point (reflections + 1) is set to 10 units along the final ray
+            linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+        }
+        else
+        {
+            linePositions[reflections + 1] = finalHit.point;
+        }
+            
 
         // Loop through the LineRenderer positions and assign them accordingly
         for (int i = 0; i < reflections + 1; i++)
@@ -130,5 +211,37 @@ public class Laser : MonoBehaviour {
         {
             pointsToCheck[i] = hits[i].point;
         }
+    }
+
+    void UpdateColor()
+    {
+        if (combinerHit)
+        {
+            combinerHit.red = combinerHit.green = combinerHit.blue = false;
+        }
+
+        if (laserColor == LaserColor.White)
+            laserColorValue = Color.white;
+
+        if (laserColor == LaserColor.Red)
+            laserColorValue = Color.red;
+
+        if (laserColor == LaserColor.Green)
+            laserColorValue = Color.green;
+
+        if (laserColor == LaserColor.Blue)
+            laserColorValue = Color.blue;
+
+        if (laserColor == LaserColor.Yellow)
+            laserColorValue = Color.yellow;
+
+        if (laserColor == LaserColor.Magenta)
+            laserColorValue = Color.magenta;
+
+        if (laserColor == LaserColor.Cyan)
+            laserColorValue = Color.cyan;
+
+        line.startColor = laserColorValue;
+        line.endColor = laserColorValue;
     }
 }

@@ -27,8 +27,13 @@ public class CliveReset : MonoBehaviour {
             cliveChanger.ExecuteOnActivate();
             other.GetComponent<Clive>().UpdateCliveType(cliveChanger.changeCliveType);
 
-            other.GetComponent<Clive>().cliveActive = true;
-            other.GetComponent<Clive>().cliveActiveChanged = true;
+            ResetClive(other);
         }
+    }
+
+    public void ResetClive(Collider clive)
+    {
+        clive.GetComponent<Clive>().cliveActive = true;
+        clive.GetComponent<Clive>().cliveActiveChanged = true;
     }
 }
