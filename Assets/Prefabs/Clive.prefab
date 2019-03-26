@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1005029013429270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99, z: 3.18}
+  m_LocalPosition: {x: -0.01973797, y: 0.455, z: 0.256}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4847178663693848}
@@ -202,7 +202,7 @@ MonoBehaviour:
   cliveCopy: {fileID: 1423195124992308, guid: b18746cf4de14c449b63eb0caa5db1fa, type: 2}
   cliveActive: 1
   cliveActiveChanged: 0
-  meshRenderer: {fileID: 0}
+  meshRenderer: {fileID: 23882059115532484}
   activeMaterial: {fileID: 2100000, guid: 88da7a605bfc62a47b5cd3fd5e34ac60, type: 2}
   deactiveMaterial: {fileID: 2100000, guid: a4bd8c59c80573948b25dd3d9fd6b75e, type: 2}
   laserMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
