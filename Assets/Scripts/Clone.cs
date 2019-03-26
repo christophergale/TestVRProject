@@ -9,7 +9,7 @@ public class Clone : CliveClass {
     GameObject clonePiece;
     public GameObject[] clones;
 
-    public int cloneMaximum = 3;
+    public int cloneMaximum = 10;
     private int cloneCurrent = 0;
 
     private Vector3 scale;
