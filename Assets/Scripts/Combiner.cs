@@ -19,6 +19,7 @@ public class Combiner : CliveClass {
 	void Start () {
         laser = gameObject.AddComponent<Laser>();
         line = gameObject.AddComponent<LineRenderer>();
+        laser.line = line;
 
         line.material = Clive.instance.laserMaterial;
         line.startWidth = line.endWidth = 0.03f;
