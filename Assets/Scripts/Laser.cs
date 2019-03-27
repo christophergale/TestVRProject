@@ -297,8 +297,11 @@ public class Laser : MonoBehaviour {
                 break;
         }
 
-        line.startColor = laserColorValue;
-        line.endColor = laserColorValue;
+        if (line)
+        {
+            line.startColor = laserColorValue;
+            line.endColor = laserColorValue;
+        }
     }
 
     void UpdateDirection()
