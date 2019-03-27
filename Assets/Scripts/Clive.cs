@@ -6,7 +6,6 @@ public class Clive : MonoBehaviour {
 
     // Here we define an enum of different Clive types
     public enum CliveType {
-        Weight,
         Combiner,
         Reflector,
         Tetris,
@@ -166,11 +165,6 @@ public class Clive : MonoBehaviour {
         if (updatedCliveType == CliveType.Reflector)
         {
             Reflector reflector = gameObject.AddComponent<Reflector>();
-        }
-
-        if (updatedCliveType == CliveType.Weight)
-        {
-            Weight weight = gameObject.AddComponent<Weight>();
         }
 
         if (updatedCliveType == CliveType.Combiner)
