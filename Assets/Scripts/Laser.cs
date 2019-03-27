@@ -135,8 +135,31 @@ public class Laser : MonoBehaviour {
                     laserSwitchHit = null;
                 }
                 // If the ray hits a collider that has a Combiner component attached
-                else if (hits[rayIndex].collider.GetComponent<Combiner>())
+                else if (hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit == null)
                 {
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
+
+                    if (laserColor == LaserColor.Red)
+                    {
+                        combinerHit.red = true;
+                    }
+
+                    if (laserColor == LaserColor.Green)
+                    {
+                        combinerHit.green = true;
+                    }
+
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
+                    }
+                }
+                else if (hits[rayIndex].collider.GetComponent<Combiner>() && hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
+                {
+                    combinerHit.powered = false;
+                    combinerHit = null;
+
                     combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
                     combinerHit.powered = true;
 
