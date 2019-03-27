@@ -53,7 +53,7 @@ public class Activatable : MonoBehaviour {
             }
             // If this is not a oneWayActivatable, we add in code to loop through the targets and return their activated to false
             // (i.e. door closes again if switch is no longer pressed)
-            else
+            else if (!isOneWayActivatable)
             {
                 if (activated)
                 {

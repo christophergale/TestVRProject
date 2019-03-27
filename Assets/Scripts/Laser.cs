@@ -131,28 +131,57 @@ public class Laser : MonoBehaviour {
                 }
                 else if (!hits[reflections].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
                 {
-                    laserSwitchHit.activated = false;
+                    if (!laserSwitchHit.isOneWayActivatable)
+                    {
+                        laserSwitchHit.activated = false;
+                    }
                     laserSwitchHit = null;
                 }
                 // If the ray hits a collider that has a Combiner component attached
                 else if (hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit == null)
                 {
-                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
-                    combinerHit.powered = true;
-
-                    if (laserColor == LaserColor.Red)
+                    if (combinerHit == null)
                     {
-                        combinerHit.red = true;
+                        combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                        combinerHit.powered = true;
+
+                        if (laserColor == LaserColor.Red)
+                        {
+                            combinerHit.red = true;
+                        }
+
+                        if (laserColor == LaserColor.Green)
+                        {
+                            combinerHit.green = true;
+                        }
+
+                        if (laserColor == LaserColor.Blue)
+                        {
+                            combinerHit.blue = true;
+                        }
                     }
-
-                    if (laserColor == LaserColor.Green)
+                    else if (hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
                     {
-                        combinerHit.green = true;
-                    }
+                        combinerHit.powered = false;
+                        combinerHit = null;
 
-                    if (laserColor == LaserColor.Blue)
-                    {
-                        combinerHit.blue = true;
+                        combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                        combinerHit.powered = true;
+
+                        if (laserColor == LaserColor.Red)
+                        {
+                            combinerHit.red = true;
+                        }
+
+                        if (laserColor == LaserColor.Green)
+                        {
+                            combinerHit.green = true;
+                        }
+
+                        if (laserColor == LaserColor.Blue)
+                        {
+                            combinerHit.blue = true;
+                        }
                     }
                 }
                 else if (hits[rayIndex].collider.GetComponent<Combiner>() && hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
@@ -218,7 +247,11 @@ public class Laser : MonoBehaviour {
 
             if (laserSwitchHit != null)
             {
-                laserSwitchHit.activated = false;
+                if (!laserSwitchHit.isOneWayActivatable)
+                {
+                    laserSwitchHit.activated = false;
+                }
+
                 laserSwitchHit = null;
             }
 
