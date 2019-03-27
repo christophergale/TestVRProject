@@ -56,13 +56,19 @@ public class Laser : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            laserChange();
+            Debug.Log("changed!");
+        }
+
         // First we fire a ray, passing in an index of 0 as it is our first ray
         // We also pass in the origin point of the ray (the transform.position of the laser) and the direction (forward)
-        FireRay(0, transform.position, transform.forward);
-
+            FireRay(0, transform.position, transform.forward);
+        
         UpdateLine();
         UpdatePointsToCheck();
-
+        
         if (chosenLaserColor != laserColor)
         {
             chosenLaserColor = laserColor;
@@ -243,5 +249,40 @@ public class Laser : MonoBehaviour {
 
         line.startColor = laserColorValue;
         line.endColor = laserColorValue;
+    }
+
+    void laserChange()
+    {
+        int currentLaserOder = (int)laserColor;
+
+        if (currentLaserOder == 1)
+        {
+            laserColor = LaserColor.Green;
+        }
+        if (currentLaserOder == 2)
+        {
+            laserColor = LaserColor.Blue;
+        }
+        if (currentLaserOder == 3)
+        {
+            laserColor = LaserColor.Yellow;
+        }
+        if (currentLaserOder == 4)
+        {
+            laserColor = LaserColor.Magenta;
+        }
+        if (currentLaserOder == 5)
+        {
+            laserColor = LaserColor.Cyan;
+        }
+        if (currentLaserOder == 6)
+        {
+            laserColor = LaserColor.White;
+        }
+        if (currentLaserOder == 0)
+        {
+            laserColor = LaserColor.Red;
+        }
+
     }
 }
