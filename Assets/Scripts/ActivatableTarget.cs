@@ -15,7 +15,7 @@ public class ActivatableTarget : MonoBehaviour {
 
     bool hasBeenActivated = false;
 
-    private void Update()
+    public virtual void Update()
     {
         if (activated && !hasBeenActivated)
         {
