@@ -21,6 +21,18 @@ public class Clive : MonoBehaviour {
     [HideInInspector]
     public CliveType chosenCliveType;
 
+    #region Clive Editor
+    // Clive Editor:
+    [HideInInspector]
+    public bool disperserColorSplit;
+
+    [HideInInspector]
+    public Tetris.TetrisShape tetrisShape;
+
+    [HideInInspector]
+    public int maximumClones;
+    #endregion
+
     // Will the Clive be cloneable at the start of the level? This is set in the Editor
     [Tooltip("Select the starting cloneable here. Will this Clive be cloneable at the start of the level?")]
     public bool cloneable;
@@ -32,7 +44,7 @@ public class Clive : MonoBehaviour {
     public bool chosenCloneable;
 
     // This is the prefab used when constructing Tetris shapes or instantiating clones
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject cliveCopy;
 
     // This bool is used when deactivating the Clive using a deactivator

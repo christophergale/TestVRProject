@@ -127,7 +127,7 @@ public class Laser : MonoBehaviour {
                 {
                     laserSwitchHit = hits[reflections].collider.GetComponent<LaserSwitchActivatable>();
                     if (laserSwitchHit.colorSpecific && laserSwitchHit.laserRequired == laserColor)
-                    laserSwitchHit.activated = true;
+                        laserSwitchHit.activated = true;
                 }
                 else if (!hits[reflections].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
                 {
@@ -140,48 +140,45 @@ public class Laser : MonoBehaviour {
                 // If the ray hits a collider that has a Combiner component attached
                 else if (hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit == null)
                 {
-                    if (combinerHit == null)
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
+
+                    if (laserColor == LaserColor.Red)
                     {
-                        combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
-                        combinerHit.powered = true;
-
-                        if (laserColor == LaserColor.Red)
-                        {
-                            combinerHit.red = true;
-                        }
-
-                        if (laserColor == LaserColor.Green)
-                        {
-                            combinerHit.green = true;
-                        }
-
-                        if (laserColor == LaserColor.Blue)
-                        {
-                            combinerHit.blue = true;
-                        }
+                        combinerHit.red = true;
                     }
-                    else if (hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
+
+                    if (laserColor == LaserColor.Green)
                     {
-                        combinerHit.powered = false;
-                        combinerHit = null;
+                        combinerHit.green = true;
+                    }
 
-                        combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
-                        combinerHit.powered = true;
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
+                    }
+                }
+                else if (hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
+                {
+                    combinerHit.powered = false;
+                    combinerHit = null;
 
-                        if (laserColor == LaserColor.Red)
-                        {
-                            combinerHit.red = true;
-                        }
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
 
-                        if (laserColor == LaserColor.Green)
-                        {
-                            combinerHit.green = true;
-                        }
+                    if (laserColor == LaserColor.Red)
+                    {
+                        combinerHit.red = true;
+                    }
 
-                        if (laserColor == LaserColor.Blue)
-                        {
-                            combinerHit.blue = true;
-                        }
+                    if (laserColor == LaserColor.Green)
+                    {
+                        combinerHit.green = true;
+                    }
+
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
                     }
                 }
                 else if (hits[rayIndex].collider.GetComponent<Combiner>() && hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
@@ -217,8 +214,18 @@ public class Laser : MonoBehaviour {
 
                     combinerHit = null;
                 }
-                else if (hits[rayIndex].collider.GetComponent<Disperser>())
+                else if (hits[rayIndex].collider.GetComponent<Disperser>() && disperserHit == null)
                 {
+                    disperserHit = hits[rayIndex].collider.GetComponent<Disperser>();
+                    disperserHit.powered = true;
+
+                    disperserHit.laserColor = laserColor;
+                }
+                else if (hits[rayIndex].collider.GetComponent<Disperser>() != disperserHit)
+                {
+                    disperserHit.powered = false;
+                    disperserHit = null;
+
                     disperserHit = hits[rayIndex].collider.GetComponent<Disperser>();
                     disperserHit.powered = true;
 

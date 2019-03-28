@@ -8,7 +8,7 @@ public class Disperser : CliveClass {
     Laser[] lasers;
     LineManager lineManager;
 
-    public bool colorSplit = true;
+    public bool colorSplit;
 
     public Laser.LaserColor laserColor;
 
@@ -16,6 +16,8 @@ public class Disperser : CliveClass {
 
     // Use this for initialization
     void Start () {
+        colorSplit = Clive.instance.disperserColorSplit;
+
         // Make a new lasers array of size == dispersalCount
         lasers = new Laser[dispersalCount];
 

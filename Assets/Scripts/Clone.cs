@@ -9,19 +9,19 @@ public class Clone : CliveClass {
     GameObject clonePiece;
     public GameObject[] clones;
 
-    public int cloneMaximum = 3;
+    public int cloneMaximum;
     private int cloneCurrent = 0;
 
     private Vector3 scale;
 
 	// Use this for initialization
 	void Start () {
-        clive = FindObjectOfType<Clive>();
-
-        scale = clive.transform.lossyScale;
-
-        clonePiece = clive.cliveCopy;
+        cloneMaximum = Clive.instance.maximumClones;
         clones = new GameObject[cloneMaximum];
+
+        scale = Clive.instance.transform.lossyScale;
+
+        clonePiece = Clive.instance.cliveCopy;
 	}
 	
 	// Update is called once per frame
