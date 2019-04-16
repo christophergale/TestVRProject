@@ -22,6 +22,7 @@ namespace Valve.VR
         public enum Size
         {
             Calibrated,
+            _400x400,
             _400x300,
             _300x225,
             _200x150
