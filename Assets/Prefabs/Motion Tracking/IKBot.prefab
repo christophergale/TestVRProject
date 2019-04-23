@@ -2202,8 +2202,8 @@ MonoBehaviour:
       pelvisTarget: {fileID: 0}
       positionWeight: 1
       rotationWeight: 1
-      pelvisPositionWeight: 0.5
-      pelvisRotationWeight: 0.5
+      pelvisPositionWeight: 0
+      pelvisRotationWeight: 0
       chestGoal: {fileID: 0}
       chestGoalWeight: 0
       minHeadHeight: 0.8
@@ -2260,8 +2260,8 @@ MonoBehaviour:
       bones: []
       target: {fileID: 0}
       bendGoal: {fileID: 0}
-      positionWeight: 1
-      rotationWeight: 1
+      positionWeight: 0
+      rotationWeight: 0
       bendGoalWeight: 0
       swivelOffset: 0
       bendToTargetWeight: 0.5
@@ -2276,8 +2276,8 @@ MonoBehaviour:
       bones: []
       target: {fileID: 0}
       bendGoal: {fileID: 0}
-      positionWeight: 1
-      rotationWeight: 1
+      positionWeight: 0
+      rotationWeight: 0
       bendGoalWeight: 0
       swivelOffset: 0
       bendToTargetWeight: 0.5

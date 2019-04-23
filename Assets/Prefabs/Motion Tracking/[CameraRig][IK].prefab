@@ -772,6 +772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196515842508340}
   - component: {fileID: 114804163430076318}
+  - component: {fileID: 114329309840700792}
   m_Layer: 0
   m_Name: Controller (right)
   m_TagString: Untagged
@@ -984,6 +985,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4622073495660646}
   - component: {fileID: 114051239458027744}
+  - component: {fileID: 114958459706390424}
   m_Layer: 0
   m_Name: Controller (left)
   m_TagString: Untagged
@@ -3650,8 +3652,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1932485625854092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.408816, y: 1, z: 2.4153237}
+  m_LocalPosition: {x: 0.0097, y: 0, z: -0.0543}
+  m_LocalScale: {x: 2.0383728, y: 1, z: 2.3469074}
   m_Children:
   - {fileID: 4622073495660646}
   - {fileID: 4196515842508340}
@@ -4068,17 +4070,17 @@ MonoBehaviour:
   wireframeHeight: 2
   drawWireframeWhenSelectedOnly: 0
   drawInGame: 1
-  size: 1
+  size: 0
   color: {r: 0, g: 1, b: 1, a: 0}
   vertices:
-  - {x: 2, y: 0.01, z: -2}
-  - {x: -2, y: 0.01, z: -2}
-  - {x: -2, y: 0.01, z: 2}
-  - {x: 2, y: 0.01, z: 2}
-  - {x: 2.15, y: 0.01, z: -2.15}
-  - {x: -2.15, y: 0.01, z: -2.15}
-  - {x: -2.15, y: 0.01, z: 2.15}
-  - {x: 2.15, y: 0.01, z: 2.15}
+  - {x: 1.4499997, y: 0.01, z: -1.2499999}
+  - {x: -1.4499997, y: 0.01, z: -1.2499999}
+  - {x: -1.4499997, y: 0.01, z: 1.2499999}
+  - {x: 1.4499997, y: 0.01, z: 1.2499999}
+  - {x: 1.5999997, y: 0.01, z: -1.3999999}
+  - {x: -1.5999997, y: 0.01, z: -1.3999999}
+  - {x: -1.5999997, y: 0.01, z: 1.3999999}
+  - {x: 1.5999997, y: 0.01, z: 1.3999999}
 --- !u!114 &114132145553695352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4096,6 +4098,19 @@ MonoBehaviour:
   verbose: 0
   createComponents: 1
   updateDynamically: 1
+--- !u!114 &114329309840700792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1431933307827816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 2
+  origin: {fileID: 4910283941736488}
 --- !u!114 &114344754706192294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4231,3 +4246,16 @@ MonoBehaviour:
     m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_DeviceIndexChangedEvent, SteamVR,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   broadcastDeviceChanges: 1
+--- !u!114 &114958459706390424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1527721202421766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 1
+  origin: {fileID: 4910283941736488}
