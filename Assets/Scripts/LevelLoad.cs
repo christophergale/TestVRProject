@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelLoad : MonoBehaviour {
-    [SerializeField]
+   [SerializeField]
     private string loadLevel;
     // Use this for initialization
     private void OnTriggerEnter(Collider other)
