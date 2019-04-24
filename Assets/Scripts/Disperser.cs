@@ -5,7 +5,7 @@ using UnityEngine;
 public class Disperser : CliveClass {
 
     public int dispersalCount = 3;
-    Laser[] lasers;
+    public Laser[] lasers;
     LineManager lineManager;
 
     public bool colorSplit;
@@ -62,7 +62,7 @@ public class Disperser : CliveClass {
         }
     }
 
-    void UpdateLaser(Laser laser)
+    public void UpdateLaser(Laser laser)
     {
         if (!colorSplit)
         {

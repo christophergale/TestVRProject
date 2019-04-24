@@ -335,7 +335,16 @@ public class Laser : MonoBehaviour {
             combinerHit.red = combinerHit.green = combinerHit.blue = false;
         }
 
-        switch(laserColor)
+        if (disperserHit)
+        {
+            disperserHit.laserColor = laserColor;
+            foreach (Laser laser in disperserHit.lasers)
+            {
+                disperserHit.UpdateLaser(laser);
+            }
+        }
+
+        switch (laserColor)
         {
             case LaserColor.White:
                 laserColorValue = Color.white;

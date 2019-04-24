@@ -35,6 +35,7 @@ public class Clone : CliveClass {
 
     void CloneClive()
     {
+        Debug.Log("Cloning Clive!");
         if (cloneCurrent < cloneMaximum)
         {
             if (clones[cloneCurrent] != null)
