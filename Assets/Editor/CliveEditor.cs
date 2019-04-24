@@ -10,11 +10,15 @@ public class CliveEditor : Editor {
     {
         base.OnInspectorGUI();
 
-        Clive clive = target as Clive;
+        serializedObject.Update();
+        SerializedProperty cloneable = serializedObject.FindProperty("cloneable");
+        SerializedProperty maximumClones = serializedObject.FindProperty("maximumClones");
 
-        if (clive.cloneable)
+        int maxClones;
+
+        if (cloneable.boolValue == true)
         {
-            clive.maximumClones = EditorGUILayout.IntField("Maximum Clones", clive.maximumClones);
+            maximumClones = EditorGUILayout.IntField("Maximum Clones", maxClones);
         }
 
         if (clive.cliveType == Clive.CliveType.Disperser)

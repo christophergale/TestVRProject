@@ -38,5 +38,13 @@ public class MultipleActivatables : Activatable {
                 }
             }
         }
+
+        if (activated)
+        {
+            foreach (ActivatableTarget target in targets)
+            {
+                target.activated = true;
+            }
+        }
     }
 }
