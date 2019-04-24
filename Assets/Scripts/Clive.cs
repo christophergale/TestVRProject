@@ -23,14 +23,12 @@ public class Clive : MonoBehaviour {
 
     #region Clive Editor
     // Clive Editor:
-    [HideInInspector]
     public bool disperserColorSplit;
 
-    [HideInInspector]
     public Tetris.TetrisShape tetrisShape;
 
-    [HideInInspector]
     public int maximumClones;
+    public float cloneTimer = 0.0f;
     #endregion
 
     // Will the Clive be cloneable at the start of the level? This is set in the Editor

@@ -45,6 +45,7 @@ public class Clone : CliveClass {
 
             clones[cloneCurrent] = Instantiate(clonePiece, this.transform.position, this.transform.rotation);
             clones[cloneCurrent].transform.localScale = scale;
+            clones[cloneCurrent].AddComponent<ClonedCube>();
 
             CliveClass[] cliveClasses = GetComponents<CliveClass>();
 
