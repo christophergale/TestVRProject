@@ -34,6 +34,7 @@ public class LineManager : MonoBehaviour {
 
         foreach (LineRenderer line in lines)
         {
+            line.gameObject.transform.parent = this.gameObject.transform;
             line.material = Clive.instance.laserMaterial;
             line.startWidth = line.endWidth = 0.03f;
         }

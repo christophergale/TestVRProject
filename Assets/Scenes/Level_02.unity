@@ -329,6 +329,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &780404124 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1005029013429270, guid: 408087ff618780846a88b1cdf3c901dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 970495310}
+--- !u!114 &780404125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 780404124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49e9794f0c064c408ef1898df8fd0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &970495310
 Prefab:
   m_ObjectHideFlags: 0
@@ -402,6 +418,11 @@ Prefab:
         type: 2}
       propertyPath: cloneTimer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114856153900727040, guid: 408087ff618780846a88b1cdf3c901dd,
+        type: 2}
+      propertyPath: maximumClones
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 408087ff618780846a88b1cdf3c901dd, type: 2}

@@ -33,14 +33,14 @@ public class Clone : CliveClass {
         }
 	}
 
-    void CloneClive()
+    public void CloneClive()
     {
         Debug.Log("Cloning Clive!");
         if (cloneCurrent < cloneMaximum)
         {
             if (clones[cloneCurrent] != null)
             {
-                Destroy(clones[cloneCurrent]);
+                DestroyClone(clones[cloneCurrent]);
             }
 
             clones[cloneCurrent] = Instantiate(clonePiece, this.transform.position, this.transform.rotation);
@@ -64,5 +64,18 @@ public class Clone : CliveClass {
         {
             cloneCurrent = 0;
         }
+    }
+
+    void DestroyClone(GameObject clone)
+    {
+        if (GetComponentInChildren<LineRenderer>())
+        {
+            foreach (LineRenderer line in GetComponentsInChildren<LineRenderer>())
+            {
+                Destroy(line.gameObject);
+            }
+        }
+
+        Destroy(clone);
     }
 }
