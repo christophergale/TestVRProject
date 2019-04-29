@@ -4,7 +4,25 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour {
 
-    LineRenderer line;
+    private Vector3 direction;
+
+    public enum LaserDirection
+    {
+        Forward,
+        Right,
+        Left,
+        Right45,
+        Left45,
+        Backward,
+        Up,
+        Down
+    }
+
+    public LaserDirection laserDirection;
+    LaserDirection chosenLaserDirection;
+
+    //[HideInInspector]
+    public LineRenderer line;
 
     public enum LaserColor
     {
@@ -25,10 +43,13 @@ public class Laser : MonoBehaviour {
 
     public Combiner combinerHit = null;
 
+    public Disperser disperserHit = null;
+
     /// <summary>
     /// The maximum number of possible reflections.
     /// </summary>
-    [Tooltip("The maximum number of possible reflections.")] public int maximumReflections = 2;
+    [Tooltip("The maximum number of possible reflections.")]
+    public int maximumReflections = 10;
 
     Ray[] rays;
     public RaycastHit[] hits;
@@ -40,18 +61,16 @@ public class Laser : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        // Get a reference to the LineRenderer component
-        line = GetComponent<LineRenderer>();
-
         // Create arrays for both our Rays and our RaycastHits
         // The rays array is 1 greater than the maximum number of possible reflections
         rays = new Ray[maximumReflections + 1]; // 3
         // The hits array is the same size as the maximum number of possible reflections
         hits = new RaycastHit[maximumReflections + 1]; // 2
 
-        chosenLaserColor = laserColor;
         UpdateColor();
-	}
+
+        UpdateDirection();
+    }
 
     // Update is called once per frame
     void Update()
@@ -65,14 +84,23 @@ public class Laser : MonoBehaviour {
         // First we fire a ray, passing in an index of 0 as it is our first ray
         // We also pass in the origin point of the ray (the transform.position of the laser) and the direction (forward)
             FireRay(0, transform.position, transform.forward);
-        
-        UpdateLine();
+
+        FireRay(0, transform.position, direction);
+
         UpdatePointsToCheck();
-        
+        UpdateDirection();
+        UpdateLine();
+
         if (chosenLaserColor != laserColor)
         {
             chosenLaserColor = laserColor;
             UpdateColor();
+        }
+
+        if (chosenLaserDirection != laserDirection)
+        {
+            chosenLaserDirection = laserDirection;
+            UpdateDirection();
         }
     }
 
@@ -107,16 +135,65 @@ public class Laser : MonoBehaviour {
                 {
                     laserSwitchHit = hits[reflections].collider.GetComponent<LaserSwitchActivatable>();
                     if (laserSwitchHit.colorSpecific && laserSwitchHit.laserRequired == laserColor)
-                    laserSwitchHit.activated = true;
+                        laserSwitchHit.activated = true;
                 }
                 else if (!hits[reflections].collider.GetComponent<LaserSwitchActivatable>() && laserSwitchHit != null)
                 {
-                    laserSwitchHit.activated = false;
+                    if (!laserSwitchHit.isOneWayActivatable)
+                    {
+                        laserSwitchHit.activated = false;
+                    }
                     laserSwitchHit = null;
                 }
                 // If the ray hits a collider that has a Combiner component attached
-                else if (hits[rayIndex].collider.GetComponent<Combiner>())
+                else if (hits[rayIndex].collider.GetComponent<Combiner>() && combinerHit == null)
                 {
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
+
+                    if (laserColor == LaserColor.Red)
+                    {
+                        combinerHit.red = true;
+                    }
+
+                    if (laserColor == LaserColor.Green)
+                    {
+                        combinerHit.green = true;
+                    }
+
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
+                    }
+                }
+                else if (hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
+                {
+                    combinerHit.powered = false;
+                    combinerHit = null;
+
+                    combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
+                    combinerHit.powered = true;
+
+                    if (laserColor == LaserColor.Red)
+                    {
+                        combinerHit.red = true;
+                    }
+
+                    if (laserColor == LaserColor.Green)
+                    {
+                        combinerHit.green = true;
+                    }
+
+                    if (laserColor == LaserColor.Blue)
+                    {
+                        combinerHit.blue = true;
+                    }
+                }
+                else if (hits[rayIndex].collider.GetComponent<Combiner>() && hits[rayIndex].collider.GetComponent<Combiner>() != combinerHit)
+                {
+                    combinerHit.powered = false;
+                    combinerHit = null;
+
                     combinerHit = hits[rayIndex].collider.GetComponent<Combiner>();
                     combinerHit.powered = true;
 
@@ -145,6 +222,29 @@ public class Laser : MonoBehaviour {
 
                     combinerHit = null;
                 }
+                else if (hits[rayIndex].collider.GetComponent<Disperser>() && disperserHit == null)
+                {
+                    disperserHit = hits[rayIndex].collider.GetComponent<Disperser>();
+                    disperserHit.powered = true;
+
+                    disperserHit.laserColor = laserColor;
+                }
+                else if (hits[rayIndex].collider.GetComponent<Disperser>() != disperserHit)
+                {
+                    disperserHit.powered = false;
+                    disperserHit = null;
+
+                    disperserHit = hits[rayIndex].collider.GetComponent<Disperser>();
+                    disperserHit.powered = true;
+
+                    disperserHit.laserColor = laserColor;
+                }
+                else if (!hits[rayIndex].collider.GetComponent<Disperser>() && disperserHit != null)
+                {
+                    disperserHit.powered = false;
+
+                    disperserHit = null;
+                }
             }
         }
         else
@@ -162,49 +262,66 @@ public class Laser : MonoBehaviour {
 
             if (laserSwitchHit != null)
             {
-                laserSwitchHit.activated = false;
+                if (!laserSwitchHit.isOneWayActivatable)
+                {
+                    laserSwitchHit.activated = false;
+                }
+
                 laserSwitchHit = null;
+            }
+
+            if (disperserHit != null)
+            {
+                disperserHit.powered = false;
+                disperserHit = null;
             }
         }
     }
 
     void UpdateLine()
     {
-        // There will always be 2 more positions on the LineRenderer than there are reflections
-        line.positionCount = reflections + 2;
-
-        // Create an array of Vector3 linePositions that is also 2 greater than the reflections count
-        Vector3[] linePositions = new Vector3[reflections + 2];
-
-        // The first position will always be at the 0 index of the linePositions array and will always be the origin point of the first ray
-        linePositions[0] = rays[0].origin;
-
-        // Loop through the subsequent reflection points (from 1) and assign their position to the linePositions array
-        for (int i = 1; i <= reflections; i++)
+        if (line)
         {
-            linePositions[i] = hits[i - 1].point;
-        }
+            // There will always be 2 more positions on the LineRenderer than there are reflections
+            line.positionCount = reflections + 2;
 
-        RaycastHit finalHit = new RaycastHit();
-        if (!Physics.Raycast(rays[reflections], out finalHit))
-        {
-            // The final point (reflections + 1) is set to 10 units along the final ray
-            linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+            // Create an array of Vector3 linePositions that is also 2 greater than the reflections count
+            Vector3[] linePositions = new Vector3[reflections + 2];
+
+            // The first position will always be at the 0 index of the linePositions array and will always be the origin point of the first ray
+            linePositions[0] = rays[0].origin;
+
+            // Loop through the subsequent reflection points (from 1) and assign their position to the linePositions array
+            for (int i = 1; i <= reflections; i++)
+            {
+                linePositions[i] = hits[i - 1].point;
+            }
+
+            RaycastHit finalHit = new RaycastHit();
+            if (!Physics.Raycast(rays[reflections], out finalHit))
+            {
+                // The final point (reflections + 1) is set to 10 units along the final ray
+                linePositions[reflections + 1] = rays[reflections].GetPoint(10.0f);
+            }
+            else
+            {
+                linePositions[reflections + 1] = finalHit.point;
+            }
+
+
+            // Loop through the LineRenderer positions and assign them accordingly
+            for (int i = 0; i < reflections + 1; i++)
+            {
+                line.SetPosition(i, linePositions[i]);
+            }
+
+            // Set the position of the final point of the LineRenderer
+            line.SetPosition(reflections + 1, linePositions[reflections + 1]);
         }
         else
         {
-            linePositions[reflections + 1] = finalHit.point;
+            GetComponent<LineManager>().ConstructLines();
         }
-            
-
-        // Loop through the LineRenderer positions and assign them accordingly
-        for (int i = 0; i < reflections + 1; i++)
-        {
-            line.SetPosition(i, linePositions[i]);
-        }
-
-        // Set the position of the final point of the LineRenderer
-        line.SetPosition(reflections + 1, linePositions[reflections + 1]);
     }
 
     void UpdatePointsToCheck()
@@ -226,29 +343,73 @@ public class Laser : MonoBehaviour {
             combinerHit.red = combinerHit.green = combinerHit.blue = false;
         }
 
-        if (laserColor == LaserColor.White)
-            laserColorValue = Color.white;
+        if (disperserHit)
+        {
+            disperserHit.laserColor = laserColor;
+            foreach (Laser laser in disperserHit.lasers)
+            {
+                disperserHit.UpdateLaser(laser);
+            }
+        }
 
-        if (laserColor == LaserColor.Red)
-            laserColorValue = Color.red;
+        switch (laserColor)
+        {
+            case LaserColor.White:
+                laserColorValue = Color.white;
+                break;
+            case LaserColor.Red:
+                laserColorValue = Color.red;
+                break;
+            case LaserColor.Green:
+                laserColorValue = Color.green;
+                break;
+            case LaserColor.Blue:
+                laserColorValue = Color.blue;
+                break;
+            case LaserColor.Yellow:
+                laserColorValue = Color.yellow;
+                break;
+            case LaserColor.Magenta:
+                laserColorValue = Color.magenta;
+                break;
+            case LaserColor.Cyan:
+                laserColorValue = Color.cyan;
+                break;
+        }
 
-        if (laserColor == LaserColor.Green)
-            laserColorValue = Color.green;
+        if (line)
+        {
+            line.startColor = laserColorValue;
+            line.endColor = laserColorValue;
+        }
+    }
 
-        if (laserColor == LaserColor.Blue)
-            laserColorValue = Color.blue;
-
-        if (laserColor == LaserColor.Yellow)
-            laserColorValue = Color.yellow;
-
-        if (laserColor == LaserColor.Magenta)
-            laserColorValue = Color.magenta;
-
-        if (laserColor == LaserColor.Cyan)
-            laserColorValue = Color.cyan;
-
-        line.startColor = laserColorValue;
-        line.endColor = laserColorValue;
+    void UpdateDirection()
+    {
+        switch(laserDirection)
+        {
+            case LaserDirection.Forward:
+                direction = transform.forward;
+                break;
+            case LaserDirection.Right:
+                direction = transform.right;
+                break;
+            case LaserDirection.Left:
+                direction = -transform.right;
+                break;
+            case LaserDirection.Right45:
+                direction = transform.forward + transform.right;
+                break;
+            case LaserDirection.Left45:
+                direction = transform.forward + -transform.right;
+                break;
+            case LaserDirection.Up:
+                direction = transform.up;
+                break;
+            case LaserDirection.Down:
+                direction = -transform.up;
+                break;
+        }
     }
 
     void laserChange()

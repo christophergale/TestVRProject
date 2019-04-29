@@ -15,6 +15,7 @@ public class Activatable : MonoBehaviour {
 
     //[HideInInspector]
     public bool activated;
+    public bool isMultiple;
 
     [Space(10)]
 
@@ -35,38 +36,41 @@ public class Activatable : MonoBehaviour {
 
     public virtual void Update()
     {
-        // We make all of our checks according to the frameInterval
-        // This is done for efficiency as we do not need to check every single frame and can instead check every other frame (or another custom interval)
-        if (Time.frameCount % frameInterval == 0)
+        if (!isMultiple)
         {
-            // If this is a oneWayActivatable, we loop through all of the targets and set their activated to true
-            // This change remains even if this Activatable's activated becomes false (i.e. door remains open even if switch is no longer pressed)
-            if (isOneWayActivatable)
+            // We make all of our checks according to the frameInterval
+            // This is done for efficiency as we do not need to check every single frame and can instead check every other frame (or another custom interval)
+            if (Time.frameCount % frameInterval == 0)
             {
-                if (activated)
+                // If this is a oneWayActivatable, we loop through all of the targets and set their activated to true
+                // This change remains even if this Activatable's activated becomes false (i.e. door remains open even if switch is no longer pressed)
+                if (isOneWayActivatable)
                 {
-                    for (int i = 0; i < targets.Count; i++)
+                    if (activated)
                     {
-                        targets[i].activated = true;
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].activated = true;
+                        }
                     }
                 }
-            }
-            // If this is not a oneWayActivatable, we add in code to loop through the targets and return their activated to false
-            // (i.e. door closes again if switch is no longer pressed)
-            else
-            {
-                if (activated)
+                // If this is not a oneWayActivatable, we add in code to loop through the targets and return their activated to false
+                // (i.e. door closes again if switch is no longer pressed)
+                else if (!isOneWayActivatable)
                 {
-                    for (int i = 0; i < targets.Count; i++)
+                    if (activated)
                     {
-                        targets[i].activated = true;
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].activated = true;
+                        }
                     }
-                }
-                else if (!activated)
-                {
-                    for (int i = 0; i < targets.Count; i++)
+                    else if (!activated)
                     {
-                        targets[i].activated = false;
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].activated = false;
+                        }
                     }
                 }
             }

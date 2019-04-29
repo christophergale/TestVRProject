@@ -52,6 +52,7 @@ public class Tetris : CliveClass {
             tetrisPieces[i].transform.localScale = scale;
         }
 
+        tetrisShape = Clive.instance.tetrisShape;
         chosenShape = tetrisShape;
         // Call the UpdateShape function, passing in the chosenShape enum
         UpdateShape(chosenShape);

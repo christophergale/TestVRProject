@@ -9,19 +9,20 @@ public class Clone : CliveClass {
     GameObject clonePiece;
     public GameObject[] clones;
 
-    public int cloneMaximum = 10;
+    public int cloneMaximum;
+
     private int cloneCurrent = 0;
 
     private Vector3 scale;
 
 	// Use this for initialization
 	void Start () {
-        clive = FindObjectOfType<Clive>();
-
-        scale = clive.transform.lossyScale;
-
-        clonePiece = clive.cliveCopy;
+        cloneMaximum = Clive.instance.maximumClones;
         clones = new GameObject[cloneMaximum];
+
+        scale = Clive.instance.transform.lossyScale;
+
+        clonePiece = Clive.instance.cliveCopy;
 	}
 	
 	// Update is called once per frame
@@ -33,17 +34,19 @@ public class Clone : CliveClass {
         }
 	}
 
-    void CloneClive()
+    public void CloneClive()
     {
+        Debug.Log("Cloning Clive!");
         if (cloneCurrent < cloneMaximum)
         {
             if (clones[cloneCurrent] != null)
             {
-                Destroy(clones[cloneCurrent]);
+                DestroyClone(clones[cloneCurrent]);
             }
 
             clones[cloneCurrent] = Instantiate(clonePiece, this.transform.position, this.transform.rotation);
             clones[cloneCurrent].transform.localScale = scale;
+            clones[cloneCurrent].AddComponent<ClonedCube>();
 
             CliveClass[] cliveClasses = GetComponents<CliveClass>();
 
@@ -62,5 +65,18 @@ public class Clone : CliveClass {
         {
             cloneCurrent = 0;
         }
+    }
+
+    void DestroyClone(GameObject clone)
+    {
+        if (GetComponentInChildren<LineRenderer>())
+        {
+            foreach (LineRenderer line in GetComponentsInChildren<LineRenderer>())
+            {
+                Destroy(line.gameObject);
+            }
+        }
+
+        Destroy(clone);
     }
 }

@@ -8,6 +8,7 @@ public class Clive : MonoBehaviour {
     public enum CliveType {
         Combiner,
         Reflector,
+        Disperser,
         Tetris,
         Battery
     }
@@ -20,6 +21,16 @@ public class Clive : MonoBehaviour {
     [HideInInspector]
     public CliveType chosenCliveType;
 
+    #region Clive Editor
+    // Clive Editor:
+    public bool disperserColorSplit;
+
+    public Tetris.TetrisShape tetrisShape;
+
+    public int maximumClones;
+    public float cloneTimer = 0.0f;
+    #endregion
+
     // Will the Clive be cloneable at the start of the level? This is set in the Editor
     [Tooltip("Select the starting cloneable here. Will this Clive be cloneable at the start of the level?")]
     public bool cloneable;
@@ -31,7 +42,7 @@ public class Clive : MonoBehaviour {
     public bool chosenCloneable;
 
     // This is the prefab used when constructing Tetris shapes or instantiating clones
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject cliveCopy;
 
     // This bool is used when deactivating the Clive using a deactivator
@@ -139,6 +150,20 @@ public class Clive : MonoBehaviour {
                     Destroy(gameObject.GetComponent<Laser>());
                 }
 
+                if (cliveClasses[i] == GetComponent<Disperser>())
+                {
+                    // Destroy the LineRenderer component
+                    foreach(LineRenderer line in gameObject.GetComponents<LineRenderer>())
+                    {
+                        Destroy(line);
+                    }
+
+                    foreach (Laser laser in gameObject.GetComponents<Laser>())
+                    {
+                        Destroy(laser);
+                    }
+                }
+
                 // Then destroy any CliveClasses that are not of type Clone
                 Destroy(cliveClasses[i]);
             }
@@ -170,6 +195,11 @@ public class Clive : MonoBehaviour {
         if (updatedCliveType == CliveType.Combiner)
         {
             Combiner combiner = gameObject.AddComponent<Combiner>();
+        }
+
+        if (updatedCliveType == CliveType.Disperser)
+        {
+            Disperser disperser = gameObject.AddComponent<Disperser>();
         }
     }
 

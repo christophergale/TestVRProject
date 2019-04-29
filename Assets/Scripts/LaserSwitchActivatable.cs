@@ -6,6 +6,7 @@ public class LaserSwitchActivatable : Activatable {
 
     public bool colorSpecific;
     public Laser.LaserColor laserRequired;
+    Laser.LaserColor chosenLaserRequired;
 
     Material material;
 
@@ -15,6 +16,7 @@ public class LaserSwitchActivatable : Activatable {
 
         if (colorSpecific)
         {
+            chosenLaserRequired = laserRequired;
             material.color = CheckSwitchColor();
         }
     }
@@ -22,29 +24,38 @@ public class LaserSwitchActivatable : Activatable {
     public override void Update()
     {
         base.Update();
+
+        if (colorSpecific)
+        {
+            if (chosenLaserRequired != laserRequired)
+            {
+                chosenLaserRequired = laserRequired;
+                material.color = CheckSwitchColor();
+            }
+        }
     }
 
     Color CheckSwitchColor()
     {
-        if (laserRequired == Laser.LaserColor.White)
+        if (chosenLaserRequired == Laser.LaserColor.White)
             return Color.white;
 
-        if (laserRequired == Laser.LaserColor.Red)
+        if (chosenLaserRequired == Laser.LaserColor.Red)
             return Color.red;
 
-        if (laserRequired == Laser.LaserColor.Green)
+        if (chosenLaserRequired == Laser.LaserColor.Green)
             return Color.green;
 
-        if (laserRequired == Laser.LaserColor.Blue)
+        if (chosenLaserRequired == Laser.LaserColor.Blue)
             return Color.blue;
 
-        if (laserRequired == Laser.LaserColor.Yellow)
+        if (chosenLaserRequired == Laser.LaserColor.Yellow)
             return Color.yellow;
 
-        if (laserRequired == Laser.LaserColor.Magenta)
+        if (chosenLaserRequired == Laser.LaserColor.Magenta)
             return Color.magenta;
 
-        if (laserRequired == Laser.LaserColor.Cyan)
+        if (chosenLaserRequired == Laser.LaserColor.Cyan)
             return Color.cyan;
 
         return Color.white;
