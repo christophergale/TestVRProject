@@ -83,7 +83,6 @@ public class Laser : MonoBehaviour {
 
         // First we fire a ray, passing in an index of 0 as it is our first ray
         // We also pass in the origin point of the ray (the transform.position of the laser) and the direction (forward)
-            FireRay(0, transform.position, transform.forward);
 
         FireRay(0, transform.position, direction);
 
