@@ -38,25 +38,25 @@ public class LaserSwitchActivatable : Activatable {
     Color CheckSwitchColor()
     {
         if (chosenLaserRequired == Laser.LaserColor.White)
-            return Color.white;
+            return new Color(1.0f, 1.0f, 1.0f, 0.7f);
 
         if (chosenLaserRequired == Laser.LaserColor.Red)
-            return Color.red;
+            return new Color(1.0f, 0f, 0f, 0.7f);
 
         if (chosenLaserRequired == Laser.LaserColor.Green)
-            return Color.green;
+            return new Color(0f, 1.0f, 0f, 0.7f);
 
         if (chosenLaserRequired == Laser.LaserColor.Blue)
-            return Color.blue;
+            return new Color(0f, 0f, 1.0f, 0.7f);
 
         if (chosenLaserRequired == Laser.LaserColor.Yellow)
-            return Color.yellow;
+            return new Color(1.0f, 1.0f, 0f, 0.7f);
 
         if (chosenLaserRequired == Laser.LaserColor.Magenta)
-            return Color.magenta;
+            return new Color(1.0f, 0f, 1.0f, 0.7f);
 
         if (chosenLaserRequired == Laser.LaserColor.Cyan)
-            return Color.cyan;
+            return new Color(0f, 1.0f, 1.0f, 0.7f);
 
         return Color.white;
     }
