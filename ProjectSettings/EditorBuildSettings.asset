@@ -8,22 +8,22 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/Eulerian_Graph/Level_1.unity
+  - enabled: 0
+    path: Assets/Scenes/Eulerian_Graph/EG_Level_1.unity
     guid: 19c6dc3a54395a84ab5b70ae28ab9b87
-  - enabled: 1
-    path: Assets/Scenes/Eulerian_Graph/Level_2.unity
+  - enabled: 0
+    path: Assets/Scenes/Eulerian_Graph/EG_Level_2.unity
     guid: ca87c1a9501d23d45bfe923717752b75
-  - enabled: 1
-    path: Assets/Scenes/Eulerian_Graph/Level_3.unity
+  - enabled: 0
+    path: Assets/Scenes/Eulerian_Graph/EG_Level_3.unity
     guid: 0833eed89e18497429bc262ff4675a20
-  - enabled: 1
-    path: Assets/Scenes/Tetris/Level_1.unity
+  - enabled: 0
+    path: Assets/Scenes/Tetris/T_Level_1.unity
     guid: c7b96754f6a34ab4fa95f54d896fdd8e
-  - enabled: 1
-    path: Assets/Scenes/Tetris/Level_2.unity
+  - enabled: 0
+    path: Assets/Scenes/Tetris/T_Level_2.unity
     guid: 158409f16758d234c8a71ace24246bd7
   - enabled: 1
-    path: Assets/Scenes/Tetris/Level_3.unity
+    path: Assets/Scenes/Tetris/T_Level_3.unity
     guid: 1ad2153bcbb136e469330faf9e886938
   m_configObjects: {}
