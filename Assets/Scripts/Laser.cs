@@ -300,6 +300,12 @@ public class Laser : MonoBehaviour {
                 disperserHit.powered = false;
                 disperserHit = null;
             }
+
+            if (prismHit != null)
+            {
+                prismHit.powered = false;
+                prismHit = null;
+            }
         }
     }
 
