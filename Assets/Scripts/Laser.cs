@@ -45,6 +45,8 @@ public class Laser : MonoBehaviour {
 
     public Disperser disperserHit = null;
 
+    public Prism prismHit = null;
+
     /// <summary>
     /// The maximum number of possible reflections.
     /// </summary>
@@ -243,6 +245,30 @@ public class Laser : MonoBehaviour {
                     disperserHit.powered = false;
 
                     disperserHit = null;
+                }
+                /////
+                else if (hits[rayIndex].collider.GetComponent<Prism>() && prismHit == null)
+                {
+                    prismHit = hits[rayIndex].collider.GetComponent<Prism>();
+                    prismHit.powered = true;
+
+                    prismHit.laserColor = laserColor;
+                }
+                else if (hits[rayIndex].collider.GetComponent<Prism>() != prismHit)
+                {
+                    prismHit.powered = false;
+                    prismHit = null;
+
+                    prismHit = hits[rayIndex].collider.GetComponent<Prism>();
+                    prismHit.powered = true;
+
+                    prismHit.laserColor = laserColor;
+                }
+                else if (!hits[rayIndex].collider.GetComponent<Prism>() && prismHit != null)
+                {
+                    prismHit.powered = false;
+
+                    prismHit = null;
                 }
             }
         }
