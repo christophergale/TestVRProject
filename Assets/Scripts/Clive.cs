@@ -29,6 +29,7 @@ public class Clive : MonoBehaviour {
 
     public int maximumClones;
     public float cloneTimer = 0.0f;
+    public bool touchCloneToKeep;
     #endregion
 
     // Will the Clive be cloneable at the start of the level? This is set in the Editor
