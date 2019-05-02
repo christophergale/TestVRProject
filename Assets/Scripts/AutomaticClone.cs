@@ -6,8 +6,8 @@ public class AutomaticClone : MonoBehaviour {
 
     bool checking = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
     }
 	
@@ -24,14 +24,13 @@ public class AutomaticClone : MonoBehaviour {
         checking = true;
 
         Debug.Log("Checking Position!");
-
-        Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 position = transform.position;
 
         float tolerance = 0.3f;
 
         yield return new WaitForSeconds(3.0f);
 
-        if (Mathf.Abs(position.x - transform.position.x) < tolerance && Mathf.Abs(position.y - transform.position.y) < tolerance && Mathf.Abs(position.y - transform.position.y) < tolerance)
+        if (position.sqrMagnitude >= tolerance * tolerance)
         {
             GetComponent<Clone>().CloneClive();
         }

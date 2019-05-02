@@ -6,6 +6,8 @@ public class Door_Open : MonoBehaviour {
 
      public float rotateSize = 50f;
      public float runSpeed = 5f;
+     public int requiredKeys = 2;
+     public int recievedKeys;
      //public GameObject dor;
     void Start()
       {
@@ -26,5 +28,12 @@ public class Door_Open : MonoBehaviour {
             Debug.Log("a");  
         }
 	}
+
+    public void DoorOpen()
+    {
+        recievedKeys++;
+        if (recievedKeys >= requiredKeys)
+            transform.Rotate(Vector3.up * -rotateSize * Time.deltaTime);
+    }
 }
 
