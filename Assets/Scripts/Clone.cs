@@ -11,6 +11,8 @@ public class Clone : CliveClass {
 
     public int cloneMaximum;
 
+    public bool touchToKeep;
+
     private int cloneCurrent = 0;
 
     private Vector3 scale;
@@ -18,6 +20,7 @@ public class Clone : CliveClass {
 	// Use this for initialization
 	void Start () {
         cloneMaximum = Clive.instance.maximumClones;
+        touchToKeep = Clive.instance.touchCloneToKeep;
         clones = new GameObject[cloneMaximum];
 
         scale = Clive.instance.transform.lossyScale;
@@ -47,6 +50,11 @@ public class Clone : CliveClass {
             clones[cloneCurrent] = Instantiate(clonePiece, this.transform.position, this.transform.rotation);
             clones[cloneCurrent].transform.localScale = scale;
             clones[cloneCurrent].AddComponent<ClonedCube>();
+
+            if (touchToKeep)
+            {
+                clones[cloneCurrent].AddComponent<KeepTouched>();
+            }
 
             CliveClass[] cliveClasses = GetComponents<CliveClass>();
 

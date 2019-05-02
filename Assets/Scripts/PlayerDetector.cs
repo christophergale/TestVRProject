@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerDetector : MonoBehaviour {
 
     [Tooltip("If this component will reflect on persistent interaction.")]
-    public bool isImmediate;
-    [Tooltip("If this component will reflect on persistent interaction.")]
-    public bool isPersistent;
+    public bool cannotTouch;
+    [Tooltip("The clive supposed to be interacted with. ")]
+    public GameObject clive;
 
     int colliderNum = 0;
 
@@ -20,21 +20,17 @@ public class PlayerDetector : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
-            colliderNum++;
-
-            if ((colliderNum == 0) && isImmediate)
+            // When it is the first time the body is detected, the cannotTouch function is on and the clive is activated
+            if ((colliderNum == 0) && cannotTouch && clive.GetComponent<Clive>().cliveActive)
             {
-                // Do something immediately as the collision happens.
-                Debug.Log("Player detected!");
-            }
-        }
-    }
+                // Change the bool values in clive to deactivate it
+                clive.GetComponent<Clive>().cliveActive = false;
+                clive.GetComponent<Clive>().cliveActiveChanged = true;
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") && isPersistent)
-        {
-            // Do something while the trigger is being touched continuously.
+                Debug.Log("Player detected! Clive deactivated!");
+            }
+
+            colliderNum++;
         }
     }
 
