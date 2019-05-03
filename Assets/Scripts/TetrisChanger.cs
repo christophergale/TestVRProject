@@ -24,5 +24,10 @@ public class TetrisChanger : ActivatableTarget {
         {
             Clive.instance.GetComponent<Tetris>().tetrisShape = changeTetrisShape;
         }
+
+        if (Clive.instance.tetrisShape != changeTetrisShape)
+        {
+            Clive.instance.tetrisShape = changeTetrisShape;
+        }
     }
 }

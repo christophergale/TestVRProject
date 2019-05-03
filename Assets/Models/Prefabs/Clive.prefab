@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 65769766869752960}
   - component: {fileID: 114633364068502612}
   - component: {fileID: 114856153900727040}
-  - component: {fileID: 114292530990515090}
+  - component: {fileID: 114163628658949900}
   m_Layer: 0
   m_Name: Clive
   m_TagString: Clive
@@ -106,8 +106,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1005029013429270}
-  m_LocalRotation: {x: -0.41231358, y: -0, z: -0, w: 0.91104203}
-  m_LocalPosition: {x: 0, y: 2.119, z: -0.407}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4847178663693848}
@@ -116,7 +116,7 @@ Transform:
   - {fileID: 4912573894998102}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -48.7, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4823509915721130
 Transform:
   m_ObjectHideFlags: 1
@@ -361,17 +361,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114292530990515090
+--- !u!114 &114163628658949900
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1005029013429270}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49e9794f0c064c408ef1898df8fd0b0, type: 3}
+  m_Script: {fileID: 11500000, guid: ddddfac9b78efe34380a3857f2e2e383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checking: 0
+  timer: 0
 --- !u!114 &114633364068502612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -383,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 5
+  index: 6
   origin: {fileID: 0}
 --- !u!114 &114856153900727040
 MonoBehaviour:
@@ -396,13 +398,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55475b9df1898ef46b0e4838804b1a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cliveType: 0
+  cliveType: 3
   chosenCliveType: 0
   disperserColorSplit: 0
   tetrisShape: 0
-  maximumClones: 1
-  cloneTimer: 10
-  cloneable: 0
+  maximumClones: 999
+  cloneTimer: 999
+  touchCloneToKeep: 0
+  cloneable: 1
   chosenCloneable: 0
   cliveCopy: {fileID: 1423195124992308, guid: b18746cf4de14c449b63eb0caa5db1fa, type: 2}
   cliveActive: 1
@@ -420,7 +423,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1842104147327178}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
