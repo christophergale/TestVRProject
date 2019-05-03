@@ -276,6 +276,7 @@ public class Laser : MonoBehaviour {
         {
             if (combinerHit != null)
             {
+                Debug.Log("resetting laser stuff!");
                 combinerHit.powered = false;
 
                 combinerHit.red = false;

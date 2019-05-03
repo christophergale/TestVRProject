@@ -5402,7 +5402,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1847361952085838, guid: 2d03de7f9d271c041ba0c85de3f0d855, type: 2}
       propertyPath: m_TagString
-      value: Player
+      value: Clive
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d03de7f9d271c041ba0c85de3f0d855, type: 2}
@@ -8158,6 +8158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checking: 0
   timer: 0
+  positionTolerance: 0.3
+  rotationTolerance: 20
 --- !u!114 &2020041242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8632,7 +8634,7 @@ MonoBehaviour:
   isTriggerChanger: 0
   cliveChanger: 0
   cloneableChanger: 0
-  changeCliveType: 0
+  changeCliveType: 3
   changeCloneable: 0
 --- !u!4 &2099490930 stripped
 Transform:

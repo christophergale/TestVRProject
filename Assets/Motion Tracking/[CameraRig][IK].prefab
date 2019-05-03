@@ -427,6 +427,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4477079051401434}
+  - component: {fileID: 114806728623215106}
   m_Layer: 0
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
@@ -615,7 +616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1150644452430086
 GameObject:
   m_ObjectHideFlags: 1
@@ -1012,7 +1013,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1318172758002164
 GameObject:
   m_ObjectHideFlags: 1
@@ -1611,6 +1612,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4402097529396668}
+  - component: {fileID: 114612171386070144}
   m_Layer: 0
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
@@ -2790,7 +2792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1937488805488196
 GameObject:
   m_ObjectHideFlags: 1
@@ -5891,9 +5893,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.07
   far clip plane: 1000
-  field of view: 60
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -6061,14 +6063,14 @@ MonoBehaviour:
   size: 0
   color: {r: 0, g: 1, b: 1, a: 0}
   vertices:
-  - {x: 2, y: 0.01, z: -2}
-  - {x: -2, y: 0.01, z: -2}
-  - {x: -2, y: 0.01, z: 2}
-  - {x: 2, y: 0.01, z: 2}
-  - {x: 2.15, y: 0.01, z: -2.15}
-  - {x: -2.15, y: 0.01, z: -2.15}
-  - {x: -2.15, y: 0.01, z: 2.15}
-  - {x: 2.15, y: 0.01, z: 2.15}
+  - {x: 1.2, y: 0.01, z: -1.1500001}
+  - {x: -1.2, y: 0.01, z: -1.1500001}
+  - {x: -1.2, y: 0.01, z: 1.1500001}
+  - {x: 1.2, y: 0.01, z: 1.1500001}
+  - {x: 1.35, y: 0.01, z: -1.3000001}
+  - {x: -1.35, y: 0.01, z: -1.3000001}
+  - {x: -1.35, y: 0.01, z: 1.3000001}
+  - {x: 1.35, y: 0.01, z: 1.3000001}
 --- !u!114 &114118801138997182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6188,7 +6190,7 @@ MonoBehaviour:
     spine:
       bones: []
       headTarget: {fileID: 4413339648396712}
-      pelvisTarget: {fileID: 4239627282771002}
+      pelvisTarget: {fileID: 0}
       positionWeight: 1
       rotationWeight: 1
       pelvisPositionWeight: 0
@@ -6247,7 +6249,7 @@ MonoBehaviour:
         m_RotationOrder: 4
     leftLeg:
       bones: []
-      target: {fileID: 4225467145997964}
+      target: {fileID: 0}
       bendGoal: {fileID: 0}
       positionWeight: 0
       rotationWeight: 0
@@ -6263,7 +6265,7 @@ MonoBehaviour:
         m_RotationOrder: 4
     rightLeg:
       bones: []
-      target: {fileID: 4191346924944864}
+      target: {fileID: 0}
       bendGoal: {fileID: 0}
       positionWeight: 0
       rotationWeight: 0
@@ -6589,6 +6591,19 @@ MonoBehaviour:
   verbose: 0
   createComponents: 1
   updateDynamically: 1
+--- !u!114 &114612171386070144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1539282769508312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 2
+  origin: {fileID: 0}
 --- !u!114 &114652287072803122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6619,6 +6634,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 137111372548274728}
   meshCollider: {fileID: 64679871699668768}
+--- !u!114 &114806728623215106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1110074470642278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 1
+  origin: {fileID: 0}
 --- !u!135 &135035605154078834
 SphereCollider:
   m_ObjectHideFlags: 1

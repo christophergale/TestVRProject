@@ -10,8 +10,8 @@ public class AutomaticClone2 : MonoBehaviour
     Vector3 rotation;
     public float timer;
 
-    float positionTolerance = 0.3f;
-    float rotationTolerance = 20f;
+    public float positionTolerance = 30f;
+    public float rotationTolerance = 500f;
 
     private void Start()
     {
