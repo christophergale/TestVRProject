@@ -13,10 +13,13 @@ public class AutomaticClone2 : MonoBehaviour
     public float positionTolerance = 30f;
     public float rotationTolerance = 500f;
 
+    public AudioClip saw;
+
     private void Start()
     {
         position = transform.position;
         rotation = transform.eulerAngles;
+        GetComponent<AudioSource>().clip = saw;
     }
 
     // Update is called once per frame
@@ -39,6 +42,7 @@ public class AutomaticClone2 : MonoBehaviour
         if (timer >= 3)
         {
             GetComponent<Clone>().CloneClive();
+            GetComponent<AudioSource>().Play();
             timer = 0;
         }
     }
