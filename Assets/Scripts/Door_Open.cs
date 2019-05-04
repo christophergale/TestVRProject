@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Door_Open : MonoBehaviour {
 
-     public float rotateSize = 50f;
-     public float runSpeed = 5f;
-     public int requiredKeys = 2;
-     public int recievedKeys;
+    public float openSpeed = 1f;
+     //public float rotateSize = 50f;
+     //public float runSpeed = 5f;
+     //public int requiredKeys = 2;
+     //public int recievedKeys;
      //public GameObject dor;
     void Start()
       {
@@ -22,18 +23,19 @@ public class Door_Open : MonoBehaviour {
      
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            transform.Rotate(Vector3.up * -rotateSize * Time.deltaTime);
-            Debug.Log("a");  
+            //transform.Rotate(Vector3.up * -rotateSize * Time.deltaTime);
+            transform.position += Vector3.up * openSpeed * Time.deltaTime;
+            Debug.Log("Doors opening!");  
         }
 	}
 
-    public void DoorOpen()
-    {
-        recievedKeys++;
-        if (recievedKeys >= requiredKeys)
-            transform.Rotate(Vector3.up * -rotateSize * Time.deltaTime);
-    }
+    //public void DoorOpen()
+    //{
+    //    recievedKeys++;
+    //    if (recievedKeys >= requiredKeys)
+    //        transform.Rotate(Vector3.up * -rotateSize * Time.deltaTime);
+    //}
 }
 
